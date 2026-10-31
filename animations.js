@@ -462,70 +462,194 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!newSrc || currentSrc === newSrc) return;
           currentSrc = newSrc;
 
+          // Determine animation type for multi-animation demo:
+          // 1. Shuffle: Architecture, Interiors
+          // 2. Dissolve: Schools, Cinemas
+          // 3. Slide / Curtain Reveal: Commercial, Residential
+          // 4. Zoom / Depth: Entertainment & Leisure, Auditoriums, Hospitality
+          let animType = item.getAttribute('data-anim');
+          if (!animType) {
+            const text = (item.textContent || '').trim().toLowerCase();
+            if (text.includes('architecture') || text.includes('interior')) {
+              animType = 'shuffle';
+            } else if (text.includes('school') || text.includes('cinema')) {
+              animType = 'dissolve';
+            } else if (text.includes('commercial') || text.includes('residential')) {
+              animType = 'slide';
+            } else if (text.includes('entertainment') || text.includes('auditorium') || text.includes('hospitality')) {
+              animType = 'zoom';
+            } else {
+              animType = 'shuffle';
+            }
+          }
+
           if (window.gsap) {
             // Stop any ongoing tweens for buttery smooth transition without jumps
-            gsap.killTweensOf([mainCard, peekCard, fadeImg]);
+            gsap.killTweensOf([mainCard, peekCard, fadeImg, mainImg]);
 
             // Set new image on crossfade layer
             fadeImg.src = newSrc;
-            gsap.set(fadeImg, { opacity: 0 });
 
-            // Create coordinated luxury deck shuffle timeline
             const tl = gsap.timeline();
 
-            // A. Top card lifts with subtle tilt & glide
-            tl.to(mainCard, {
-              y: -14,
-              x: 6,
-              rotate: -1,
-              scale: 1.025,
-              duration: 0.22,
-              ease: 'power2.out',
-            }, 0)
-            // B. Seamlessly crossfades to incoming image
-            .to(fadeImg, {
-              opacity: 1,
-              duration: 0.28,
-              ease: 'power1.inOut',
-            }, 0.04)
-            // C. Glides smoothly back into deck with luxury deceleration
-            .to(mainCard, {
-              y: 0,
-              x: 0,
-              rotate: 0,
-              scale: 1,
-              duration: 0.44,
-              ease: 'power3.out',
-              onComplete: () => {
-                mainImg.src = newSrc;
-                gsap.set(fadeImg, { opacity: 0 });
-              }
-            }, 0.22);
+            if (animType === 'dissolve') {
+              // =========================================================
+              // DEMO OPTION 2: PURE DISSOLVE / SOFT CROSSFADE (Schools, Cinemas)
+              // SPEED CONTROL: Yahan duration (seconds) change karein (e.g. 0.75s)
+              // =========================================================
+              const dissolveDuration = 0.75; // <-- DISSOLVE SPEED: is number ko kam/zyada kar sakte hain
 
-            // D. Peek card reacts underneath
-            if (peekCard) {
-              if (peekImg && peekSrc) {
-                setTimeout(() => {
-                  if (peekImg) peekImg.src = peekSrc;
-                }, 100);
+              gsap.set(mainCard, { x: 0, y: 0, rotate: 0, scale: 1 });
+              if (peekCard) {
+                gsap.set(peekCard, { x: 0, y: 22, rotate: 0, scale: 0.98 });
+                if (peekImg && peekSrc) peekImg.src = peekSrc;
               }
+              gsap.set(mainImg, { xPercent: 0, yPercent: 0, scale: 1, opacity: 1 });
+              gsap.set(fadeImg, { xPercent: 0, yPercent: 0, opacity: 0, scale: 1.02 });
 
-              tl.to(peekCard, {
-                y: 34,
-                x: -5,
-                rotate: 1.2,
-                scale: 0.96,
-                duration: 0.2,
+              tl.to(fadeImg, {
+                opacity: 1,
+                scale: 1,
+                duration: dissolveDuration,
                 ease: 'power2.out',
               }, 0)
-              .to(peekCard, {
-                y: 22,
+              .to(mainImg, {
+                opacity: 0.15,
+                duration: dissolveDuration,
+                ease: 'power2.out',
+                onComplete: () => {
+                  mainImg.src = newSrc;
+                  gsap.set(mainImg, { opacity: 1, scale: 1 });
+                  gsap.set(fadeImg, { opacity: 0, scale: 1 });
+                }
+              }, 0);
+
+            } else if (animType === 'slide') {
+              // =========================================================
+              // DEMO OPTION 3: CURTAIN / SLIDE REVEAL (Commercial, Residential)
+              // SPEED CONTROL: Yahan duration (seconds) change karein (e.g. 0.7s)
+              // =========================================================
+              const slideDuration = 0.7; // <-- SLIDE SPEED: is number ko kam/zyada kar sakte hain
+
+              gsap.set(mainCard, { x: 0, y: 0, rotate: 0, scale: 1 });
+              if (peekCard) {
+                gsap.set(peekCard, { x: 0, y: 22, rotate: 0, scale: 0.98 });
+                if (peekImg && peekSrc) peekImg.src = peekSrc;
+              }
+              gsap.set(mainImg, { xPercent: 0, yPercent: 0, scale: 1, opacity: 1 });
+              gsap.set(fadeImg, { xPercent: 0, yPercent: 100, opacity: 1, scale: 1 });
+
+              tl.to(fadeImg, {
+                yPercent: 0,
+                duration: slideDuration,
+                ease: 'power3.out',
+              }, 0)
+              .to(mainImg, {
+                yPercent: -20,
+                opacity: 0.5,
+                duration: slideDuration,
+                ease: 'power3.out',
+                onComplete: () => {
+                  mainImg.src = newSrc;
+                  gsap.set(mainImg, { yPercent: 0, opacity: 1 });
+                  gsap.set(fadeImg, { opacity: 0, yPercent: 0 });
+                }
+              }, 0);
+
+            } else if (animType === 'zoom') {
+              // =========================================================
+              // DEMO OPTION 4: CINEMATIC ZOOM & DEPTH (Entertainment, Auditoriums, Hospitality)
+              // SPEED CONTROL: Yahan duration (seconds) change karein (e.g. 0.75s)
+              // =========================================================
+              const zoomDuration = 0.75; // <-- ZOOM SPEED: is number ko kam/zyada kar sakte hain
+
+              gsap.set(mainCard, { x: 0, y: 0, rotate: 0, scale: 1 });
+              if (peekCard) {
+                gsap.set(peekCard, { x: 0, y: 22, rotate: 0, scale: 0.98 });
+                if (peekImg && peekSrc) peekImg.src = peekSrc;
+              }
+              gsap.set(mainImg, { xPercent: 0, yPercent: 0, scale: 1, opacity: 1 });
+              gsap.set(fadeImg, { xPercent: 0, yPercent: 0, opacity: 0, scale: 1.12 });
+
+              tl.to(fadeImg, {
+                opacity: 1,
+                scale: 1,
+                duration: zoomDuration,
+                ease: 'power2.out',
+              }, 0)
+              .to(mainImg, {
+                opacity: 0,
+                scale: 0.92,
+                duration: zoomDuration * 0.9,
+                ease: 'power2.out',
+                onComplete: () => {
+                  mainImg.src = newSrc;
+                  gsap.set(mainImg, { opacity: 1, scale: 1 });
+                  gsap.set(fadeImg, { opacity: 0, scale: 1 });
+                }
+              }, 0);
+
+            } else {
+              // =========================================================
+              // DEMO OPTION 1: ORIGINAL LUXURY DECK SHUFFLE (Architecture, Interiors)
+              // =========================================================
+              gsap.set(mainImg, { xPercent: 0, yPercent: 0, scale: 1, opacity: 1 });
+              gsap.set(fadeImg, { xPercent: 0, yPercent: 0, scale: 1, opacity: 0 });
+
+              // A. Top card lifts with subtle tilt & glide
+              tl.to(mainCard, {
+                y: -14,
+                x: 6,
+                rotate: -1,
+                scale: 1.025,
+                duration: 0.22,
+                ease: 'power2.out',
+              }, 0)
+              // B. Seamlessly crossfades to incoming image
+              .to(fadeImg, {
+                opacity: 1,
+                duration: 0.28,
+                ease: 'power1.inOut',
+              }, 0.04)
+              // C. Glides smoothly back into deck with luxury deceleration
+              .to(mainCard, {
+                y: 0,
                 x: 0,
                 rotate: 0,
-                scale: 0.98,
+                scale: 1,
                 duration: 0.44,
                 ease: 'power3.out',
-              }, 0.2);
+                onComplete: () => {
+                  mainImg.src = newSrc;
+                  gsap.set(fadeImg, { opacity: 0 });
+                }
+              }, 0.22);
+
+              // D. Peek card reacts underneath
+              if (peekCard) {
+                if (peekImg && peekSrc) {
+                  setTimeout(() => {
+                    if (peekImg) peekImg.src = peekSrc;
+                  }, 100);
+                }
+
+                tl.to(peekCard, {
+                  y: 34,
+                  x: -5,
+                  rotate: 1.2,
+                  scale: 0.96,
+                  duration: 0.2,
+                  ease: 'power2.out',
+                }, 0)
+                .to(peekCard, {
+                  y: 22,
+                  x: 0,
+                  rotate: 0,
+                  scale: 0.98,
+                  duration: 0.44,
+                  ease: 'power3.out',
+                }, 0.2);
+              }
             }
           } else {
             mainImg.src = newSrc;

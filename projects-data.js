@@ -46,7 +46,7 @@ const ARRIS_PROJECTS = {
         "alt": "Devgn Cinex Bellona VIP Insignia Lounge"
       }
     ],
-    related: ['times-tower-new', 'rajhans-precia', 'ib-suncity'],
+    related: ['rajhans-precia-cinemas', 'devgn-cinex-ahmedabad', 'devgn-cinex-elan'],
     cardImage: 'images/Devgn Cinex Bellona/4.jpeg'
   },
 
@@ -93,7 +93,7 @@ const ARRIS_PROJECTS = {
         "alt": "Rajhans Skylar Architectural Detail"
       }
     ],
-    related: ['times-tower-new', 'rajhans-precia', 'ib-suncity'],
+    related: ['times-tower-new', 'rajhans-precia', 'rajhans-precia-cinemas'],
     cardImage: 'images/Rajhans Skylar Commercial/Cam_01.jpg'
   },
 
@@ -140,7 +140,7 @@ const ARRIS_PROJECTS = {
         "alt": "DPS Hazaribaug Campus Overview"
       }
     ],
-    related: ['ahs-hazaribaug', 'ib-suncity', 'aldona-villa'],
+    related: ['ahs-hazaribaug', 'ib-suncity', 'times-tower-new'],
     cardImage: 'images/Rectangle 62.png'
   },
 
@@ -188,7 +188,7 @@ const ARRIS_PROJECTS = {
         "alt": "Aldona Villa Master Bedroom"
       }
     ],
-    related: ['bottle-house', 'hazaribaug-bungalow', 'rajhans-skylar'],
+    related: ['bottle-house', 'hazaribaug-bungalow', 'dps-hazaribaug'],
     cardImage: 'images/projects/aldona_villa.png'
   },
 
@@ -235,7 +235,7 @@ const ARRIS_PROJECTS = {
         "alt": "Times Tower New Modern Workspace"
       }
     ],
-    related: ['rajhans-skylar', 'rajhans-precia', 'devgn-cinex-bellona'],
+    related: ['rajhans-skylar', 'rajhans-precia', 'rajhans-precia-cinemas'],
     cardImage: 'images/Times Tower New/E_PHX2662_LR.jpg'
   },
 
@@ -282,7 +282,7 @@ const ARRIS_PROJECTS = {
         "alt": "Devgn Cinex Ahmedabad Premium Seating"
       }
     ],
-    related: ['devgn-cinex-bellona', 'devgn-cinex-elan', 'la-trichy'],
+    related: ['devgn-cinex-bellona', 'devgn-cinex-elan', 'rajhans-precia-cinemas'],
     cardImage: 'images/Devgn Cinex Ahmedabad/01.jpg'
   },
 
@@ -377,7 +377,7 @@ const ARRIS_PROJECTS = {
         "alt": "AHS Hazaribaug Institutional Facade"
       }
     ],
-    related: ['dps-hazaribaug', 'ib-suncity', 'hazaribaug-bungalow'],
+    related: ['dps-hazaribaug', 'ib-suncity', 'times-tower-new'],
     cardImage: 'images/AHS Hazaribaug/DSC06724.JPG.jpg'
   },
 
@@ -471,7 +471,7 @@ const ARRIS_PROJECTS = {
         "alt": "Bottle House Night View"
       }
     ],
-    related: ['aldona-villa', 'hazaribaug-bungalow', 'rajhans-precia'],
+    related: ['aldona-villa', 'hazaribaug-bungalow', 'dps-hazaribaug'],
     cardImage: 'images/Bottle house/2.jpg'
   },
 
@@ -565,7 +565,7 @@ const ARRIS_PROJECTS = {
         "alt": "Devgn Cinex Elan VIP Seating"
       }
     ],
-    related: ['devgn-cinex-bellona', 'devgn-cinex-ahmedabad', 'ib-suncity'],
+    related: ['devgn-cinex-bellona', 'devgn-cinex-ahmedabad', 'rajhans-precia-cinemas'],
     cardImage: 'images/Devgn Cinex Elan/02.jpg'
   },
 
@@ -612,332 +612,56 @@ const ARRIS_PROJECTS = {
         "alt": "Rajhans Precia Premium Retail"
       }
     ],
-    related: ['rajhans-skylar', 'times-tower-new', 'devgn-cinex-bellona'],
+    related: ['times-tower-new', 'rajhans-skylar', 'rajhans-precia-cinemas'],
     cardImage: 'images/Rajhans Precia/DJI_20250120213924_0431_D.jpg'
   },
-
-  // Safety fallbacks for additional cards from expertise pages:
-  'quorum': {
-    id: 'quorum',
-    title: 'Quorum',
-    sec: 'SEC. 2013',
-    category: 'Architecture',
-    location: 'Raipur',
-    year: '2013',
-    heroImage: 'images/architecture/Rectangle 67.png',
-    storyImage: 'images/architecture/Rectangle 68.png',
-    description: "An expressive corporate complex featuring clean geometries, deep solar shading louvers, and expansive collaborative workspaces designed to optimize natural daylight throughout the day.",
-    specs: {
-      location: 'Raipur',
-      scope: 'Architecture, Residential, Interiors',
-      siteArea: '65,000 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/architecture/Rectangle 67.png",
-        "alt": "Quorum Elevation"
-      },
-      {
-        "url": "images/architecture/Rectangle 68.png",
-        "alt": "Quorum Louvered Facade Detail"
-      },
-      {
-        "url": "images/architecture/Rectangle 69.png",
-        "alt": "Quorum Commercial Workspace"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "Quorum Entrance Atrium"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "Quorum Modern Architecture"
-      },
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "Quorum Workspace Lounge"
-      }
-    ],
-    related: ['times-tower-new', 'rajhans-skylar', 'rajhans-precia'],
-    cardImage: 'images/architecture/Rectangle 67.png'
-  },
-
-  'urban-square': {
-    id: 'urban-square',
-    title: 'Urban Square',
-    sec: 'SEC. 2016',
-    category: 'Architecture',
-    location: 'Mumbai',
-    year: '2016',
-    heroImage: 'images/architecture/Rectangle 68.png',
-    storyImage: 'images/architecture/Rectangle 69.png',
-    description: "A high-density mixed-use urban development in Mumbai integrating corporate offices, curated retail courtyards, and pedestrian thoroughfares with sustainable passive cooling.",
-    specs: {
-      location: 'Mumbai, Maharashtra',
-      scope: 'Urban Planning, Architecture',
-      siteArea: '1,20,000 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/architecture/Rectangle 68.png",
-        "alt": "Urban Square Tower Facade"
-      },
-      {
-        "url": "images/architecture/Rectangle 67.png",
-        "alt": "Urban Square Public Plaza"
-      },
-      {
-        "url": "images/architecture/Rectangle 69.png",
-        "alt": "Urban Square Commercial Promenade"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "Urban Square Grand Atrium"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "Urban Square Modern Architecture"
-      },
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "Urban Square Office Lounge"
-      }
-    ],
-    related: ['times-tower-new', 'rajhans-skylar', 'quorum'],
-    cardImage: 'images/architecture/Rectangle 68.png'
-  },
-
-  'aurelia-business-park': {
-    id: 'aurelia-business-park',
-    title: 'Aurelia Business Park',
-    sec: 'SEC. 2018',
-    category: 'Architecture',
-    location: 'Pune',
-    year: '2018',
-    heroImage: 'images/architecture/Rectangle 69.png',
-    storyImage: 'images/architecture/Rectangle 68.png',
-    description: "A forward-looking commercial development located in Pune, engineered to balance corporate efficiency with expansive green terraces and biophilic interior spaces.",
-    specs: {
-      location: 'Pune, Maharashtra',
-      scope: 'Commercial Architecture, Landscape Design',
-      siteArea: '1,50,000 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/architecture/Rectangle 69.png",
-        "alt": "Aurelia Business Park Façade"
-      },
-      {
-        "url": "images/architecture/Rectangle 67.png",
-        "alt": "Aurelia Business Park Central Landscaped Court"
-      },
-      {
-        "url": "images/architecture/Rectangle 68.png",
-        "alt": "Aurelia Business Park Glass Envelope"
-      },
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "Aurelia Business Park Conference Suite"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "Aurelia Business Park Modern Architecture"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "Aurelia Business Park Entry Atrium"
-      }
-    ],
-    related: ['times-tower-new', 'urban-square', 'rajhans-skylar'],
-    cardImage: 'images/architecture/Rectangle 69.png'
-  },
-
-  'the-grand-pavilion': {
-    id: 'the-grand-pavilion',
-    title: 'The Grand Pavilion',
-    sec: 'SEC. 2020',
-    category: 'Architecture',
-    location: 'Ahmedabad',
-    year: '2020',
-    heroImage: 'images/architecture/Rectangle 67 (1).png',
-    storyImage: 'images/architecture/Rectangle 66.png',
-    description: "An iconic cultural and hospitality pavilion in Ahmedabad characterized by sculptural colonnades, expansive water reflecting pools, and climate-moderating stone brise-soleil.",
-    specs: {
-      location: 'Ahmedabad, Gujarat',
-      scope: 'Architecture, Hospitality Interiors',
-      siteArea: '95,000 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/architecture/Rectangle 67 (1).png",
-        "alt": "The Grand Pavilion Elevation"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "The Grand Pavilion Sculptural Colonnade"
-      },
-      {
-        "url": "images/architecture/Rectangle 68 (1).png",
-        "alt": "The Grand Pavilion Reception Hall"
-      },
-      {
-        "url": "images/architecture/Rectangle 69 (1).png",
-        "alt": "The Grand Pavilion Reflecting Pool"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "The Grand Pavilion Interior Lounge"
-      },
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "The Grand Pavilion Banquet Space"
-      }
-    ],
-    related: ['devgn-cinex-ahmedabad', 'rajhans-precia', 'aldona-villa'],
-    cardImage: 'images/architecture/Rectangle 67 (1).png'
-  },
-
-  'verde-residence': {
-    id: 'verde-residence',
-    title: 'Verde Residence',
-    sec: 'SEC. 2022',
-    category: 'Architecture',
-    location: 'Bengaluru',
-    year: '2022',
-    heroImage: 'images/architecture/Rectangle 68 (1).png',
-    storyImage: 'images/architecture/image 9.png',
-    description: "An urban residential sanctuary in Bengaluru celebrating vertical greenery, deep recessed balconies, and thermal mass strategies for natural cooling.",
-    specs: {
-      location: 'Bengaluru, Karnataka',
-      scope: 'Residential Architecture, Interiors',
-      siteArea: '24,000 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/architecture/Rectangle 68 (1).png",
-        "alt": "Verde Residence Elevation"
-      },
-      {
-        "url": "images/architecture/Rectangle 69 (1).png",
-        "alt": "Verde Residence Double-Height Living Salon"
-      },
-      {
-        "url": "images/about/Rectangle 1.png",
-        "alt": "Verde Residence Biophilic Garden Lounge"
-      },
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "Verde Residence Dining Suite"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "Verde Residence Modern Architecture"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "Verde Residence Entrance Atrium"
-      }
-    ],
-    related: ['aldona-villa', 'hazaribaug-bungalow', 'bottle-house'],
-    cardImage: 'images/architecture/Rectangle 68 (1).png'
-  },
-
-  'aria-corporate-centreorum': {
-    id: 'aria-corporate-centreorum',
-    title: 'Aria Corporate Centre',
+  // Rajhans Precia (Cinemas, Surat) - Dedicated Cinema Details Page
+  'rajhans-precia-cinemas': {
+    id: 'rajhans-precia-cinemas',
+    title: 'Rajhans Precia',
     sec: 'SEC. 2024',
-    category: 'Architecture',
-    location: 'Hyderabad',
+    category: 'Cinemas',
+    location: 'Surat',
     year: '2024',
-    heroImage: 'images/architecture/Rectangle 69 (1).png',
-    storyImage: 'images/architecture/Rectangle 65.png',
-    description: "A flagship corporate center in Hyderabad combining sleek crystalline architectural geometries with high-performance workplace interiors.",
+    heroImage: 'images/Rajhans Precia/KZP00451.jpg',
+    storyImage: 'images/Rajhans Precia/KZP00409.jpg',
+    description: "Inspired by Art Deco elegance, the interior of this Devgn Cinemas flagship property in Mumbai combines bold geometry, rich symmetry, and metallic accents, layered with cinematic glow features signage, plush velvet seating, vintage posters, and patterned carpets. The space creates an atmosphere where every corner echoes the romance of yesterday's cinema while resonating with today's audience.",
     specs: {
-      location: 'Hyderabad, Telangana',
-      scope: 'Commercial Architecture, Workplace Planning',
-      siteArea: '1,40,000 sq.ft',
-      status: 'Completed',
+      location: 'Surat',
+      scope: 'Cinemas, Interiors',
+      siteArea: '32,000 sqft',
+      status: '2024',
     },
     gallery: [
       {
-        "url": "images/architecture/Rectangle 69 (1).png",
-        "alt": "Aria Corporate Centre Crystalline Tower Elevation"
+        "url": "images/Rajhans Precia/KZP00518.jpg",
+        "alt": "Rajhans Precia Cinema Auditorium"
       },
       {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "Aria Corporate Centre Grand Atrium"
+        "url": "images/Rajhans Precia/KZP00183.jpg",
+        "alt": "Rajhans Precia Modern Ceiling Architecture"
       },
       {
-        "url": "images/architecture/Rectangle 68.png",
-        "alt": "Aria Corporate Centre High-Efficiency Curtain Wall"
+        "url": "images/Rajhans Precia/KZP00127.jpg",
+        "alt": "Rajhans Precia Concession & Ticket Lounge"
       },
       {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "Aria Corporate Centre Conference Suite"
+        "url": "images/Rajhans Precia/KZP00285.jpg",
+        "alt": "Rajhans Precia Cinema Concourse"
       },
       {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "Aria Corporate Centre Entrance Lobby"
+        "url": "images/Rajhans Precia/KZP00350.jpg",
+        "alt": "Rajhans Precia Atrium Promenade"
       },
       {
-        "url": "images/architecture/Rectangle 67.png",
-        "alt": "Aria Corporate Centre Modern Facade"
+        "url": "images/Rajhans Precia/KZP00409.jpg",
+        "alt": "Rajhans Precia Premium Seating"
       }
     ],
-    related: ['times-tower-new', 'rajhans-skylar', 'aurelia-business-park'],
-    cardImage: 'images/architecture/Rectangle 69 (1).png'
+    related: ['devgn-cinex-bellona', 'devgn-cinex-ahmedabad', 'devgn-cinex-elan'],
+    cardImage: 'images/Rajhans Precia/KZP00451.jpg'
   },
 
-  'the-grand-residence': {
-    id: 'the-grand-residence',
-    title: 'The Grand Residence',
-    sec: 'SEC. 2016',
-    category: 'Interior',
-    location: 'Mumbai',
-    year: '2016',
-    heroImage: 'images/interior/Rectangle 69.png',
-    storyImage: 'images/interior/Rectangle 65.png',
-    description: "A bespoke residential interior in Mumbai marrying luxurious Italian marble finishes with minimal architectural detailing and custom ambient lighting.",
-    specs: {
-      location: 'Mumbai, Maharashtra',
-      scope: 'Luxury Interior Architecture',
-      siteArea: '9,500 sq.ft',
-      status: 'Completed',
-    },
-    gallery: [
-      {
-        "url": "images/interior/Rectangle 66.png",
-        "alt": "The Grand Residence Living Salon"
-      },
-      {
-        "url": "images/interior/Rectangle 67.png",
-        "alt": "The Grand Residence Master Suite"
-      },
-      {
-        "url": "images/interior/Rectangle 111.png",
-        "alt": "The Grand Residence Dining Hall"
-      },
-      {
-        "url": "images/interior/Rectangle 69.png",
-        "alt": "The Grand Residence Overview"
-      },
-      {
-        "url": "images/interior/Rectangle 65.png",
-        "alt": "The Grand Residence Entrance Foyer"
-      },
-      {
-        "url": "images/architecture/Rectangle 111.png",
-        "alt": "The Grand Residence Modern Architecture"
-      }
-    ],
-    related: ['aldona-villa', 'hazaribaug-bungalow', 'bottle-house'],
-    cardImage: 'images/interior/Rectangle 69.png'
-  }
 };
 
 // Global / Module export support
