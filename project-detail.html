@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Details | ARRIS ARCHITECTS</title>
+
+    <!-- Local SF Pro Fonts & Animations -->
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="animations.css" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"SF Pro Display"', "sans-serif"],
+              display: ['"SF Pro Display"', "sans-serif"],
+              text: ['"SF Pro Display"', "sans-serif"],
+            },
+            fontWeight: {
+              light: "300",
+              normal: "300",
+              medium: "300",
+              semibold: "300",
+              bold: "300",
+            },
+            colors: {
+              arris: {
+                cream: "#F4F0EB",
+                creamDark: "#EAE5DD",
+                dark: "#121212",
+                cardDark: "#1E1E1E",
+                galleryDark: "#181818",
+                footerDark: "#161616",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+      body {
+        font-family: "SF Pro Display", sans-serif;
+        font-weight: 300;
+        background-color: #f4f0eb;
+        color: #000000;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      img {
+        image-rendering: auto;
+      }
+
+      /* Subtle image hover zoom */
+      .project-card:hover .project-img {
+        transform: scale(1.025);
+      }
+
+      /* Hide scrollbars for carousel */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Navbar Dropdown for PRACTICE */
+      .nav-dropdown {
+        position: relative;
+      }
+      .nav-dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(8px);
+        min-width: 220px;
+        background: rgba(22, 22, 22, 0.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 14px 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease,
+          visibility 0.25s ease;
+        z-index: 100;
+      }
+      .nav-dropdown:hover .nav-dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+      }
+      .nav-dropdown-menu li {
+        width: 100%;
+      }
+      .nav-dropdown-menu a {
+        display: block;
+        padding: 10px 22px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        text-align: left;
+        white-space: nowrap;
+        transition:
+          color 0.2s ease,
+          background-color 0.2s ease;
+      }
+      .nav-dropdown-menu a:hover {
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      /* ========================================================================= */
+      /* Dynamic Expanding Gallery Accordion Animation                             */
+      /* ========================================================================= */
+      /* Mobile First: Stacked vertically, full-width images */
+      .gallery-accordion {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        gap: 16px;
+      }
+
+      .gallery-item {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+        background-color: #121212;
+        cursor: pointer;
+      }
+
+      /* Soft dimming overlay for non-hovered photos on desktop */
+      .gallery-item .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.35);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform;
+      }
+
+      /* Desktop (md: 768px+): Expanding Horizontal Accordion */
+      @media (min-width: 768px) {
+        .gallery-accordion {
+          flex-direction: row;
+          align-items: stretch;
+          height: 520px;
+          gap: 16px;
+        }
+
+        .gallery-item {
+          flex: 1 1 0%;
+          min-width: 0;
+          height: 100%;
+          aspect-ratio: auto;
+          border-radius: 2px;
+          transition: flex 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: flex;
+        }
+
+        .gallery-item:hover img,
+        .gallery-item.active img {
+          transform: scale(1.04);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .gallery-accordion {
+          height: 580px;
+          gap: 20px;
+        }
+      }
+
+      @media (min-width: 1280px) {
+        .gallery-accordion {
+          height: 640px;
+          gap: 24px;
+        }
+      }
+
+      /* Desktop Hover Behavior: Hovered photo expands to 3.5 flex, siblings contract to 0.8 flex */
+      @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+        .gallery-accordion:hover .gallery-item {
+          flex: 0.8 1 0%;
+        }
+        .gallery-accordion:hover .gallery-item .gallery-overlay {
+          opacity: 0.35;
+        }
+
+        .gallery-accordion .gallery-item:hover {
+          flex: 3.5 1 0%;
+        }
+        .gallery-accordion .gallery-item:hover .gallery-overlay {
+          opacity: 0;
+        }
+      }
+
+      /* Desktop Clicked / Active State */
+      @media (min-width: 768px) {
+        .gallery-accordion.has-active .gallery-item {
+          flex: 0.8 1 0%;
+        }
+        .gallery-accordion.has-active .gallery-item .gallery-overlay {
+          opacity: 0.35;
+        }
+        .gallery-accordion.has-active .gallery-item.active {
+          flex: 3.5 1 0%;
+        }
+        .gallery-accordion.has-active .gallery-item.active .gallery-overlay {
+          opacity: 0;
+        }
+      }
+
+      /* Tablet view only (768px–1023px): show just 2 related projects */
+      @media (min-width: 768px) and (max-width: 1023px) {
+        #related-projects-grid .related-card:nth-child(3) {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-arris-cream text-black antialiased">
+    <!-- ========================================================================= -->
+    <!-- 1. HERO HEADER WITH OVERLAY NAVIGATION (EXACT PROJECTS - 01.PNG)          -->
+    <!-- ========================================================================= -->
+    <header
+      id="hero-section"
+      class="relative w-full min-h-[640px] sm:min-h-[720px] lg:min-h-[860px] xl:min-h-[940px] bg-neutral-950 flex flex-col justify-between"
+    >
+      <!-- Hero Background Image -->
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img
+          id="hero-bg-img"
+          src="images/Rajhans Skylar Commercial/Cam_01.jpg"
+          alt="Project Hero Banner"
+          class="w-full h-full object-cover object-center brightness-[0.97]"
+        />
+        <!-- Gradient overlay for text contrast (Lighter version) -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-black/25 pointer-events-none"
+        ></div>
+      </div>
+
+      <!-- Navigation Bar (Overlay on top of Hero) -->
+      <nav
+        class="relative z-20 w-full flex items-center justify-between px-6 sm:px-12 xl:px-[97px] py-6 sm:py-8 max-w-[1920px] mx-auto hero-nav-animate"
+      >
+        <!-- Logo -->
+        <a href="index.html" class="inline-block">
+          <img
+            src="images/image 7.png"
+            alt="Arris Architects Logo"
+            class="h-9 sm:h-10 lg:h-12 w-auto drop-shadow-sm brightness-100"
+          />
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <ul
+          class="hidden lg:flex items-center gap-8 md:gap-10 lg:gap-[130px] text-white t-nav font-[300] tracking-[0.11em] uppercase"
+        >
+          <li>
+            <a
+              href="projects.html"
+              class="hover:text-white/70 transition-colors py-2 block"
+              >PROJECTS</a
+            >
+          </li>
+
+          <li class="nav-dropdown-expertise">
+            <a
+              href="expertise-interior.html"
+              class="hover:text-white/70 transition-colors py-2 block"
+              >EXPERTISE</a
+            >
+            <!-- Mega Dropdown Panel with Image Shuffle -->
+            <div class="expertise-dropdown-menu">
+              <div
+                class="flex items-center justify-between gap-6 lg:gap-10 xl:gap-14 w-full"
+              >
+                <!-- Left: Category List -->
+                <div class="w-[44%] flex flex-col justify-center">
+                  <ul class="flex flex-col space-y-2 xl:space-y-2.5">
+                    <li>
+                      <a
+                        href="expertise-architecture.html"
+                        class="expertise-nav-item active"
+                        data-img="images/Hazaribaug Bungalow/Scene 13_1.jpg"
+                        data-peek="images/interior/Rectangle 66.png"
+                      >
+                        Architecture
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-interior.html"
+                        class="expertise-nav-item"
+                        data-img="images/Aldona Villa/BED-1-2_3.jpg"
+                        data-peek="images/Aldona Villa/17_4.jpg"
+                      >
+                        Interiors
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-schools.html"
+                        class="expertise-nav-item"
+                        data-img="images/homepage/project 2.jpg.jpeg"
+                        data-peek="images/Rajhans Precia/KZP00451.jpg"
+                      >
+                        Schools
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-cinemas.html"
+                        class="expertise-nav-item"
+                        data-img="images/Devgn Cinex Bellona/4.jpeg"
+                        data-peek="images/homepage/project 1.2.jpg.jpeg"
+                      >
+                        Cinemas
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-commercial.html"
+                        class="expertise-nav-item"
+                        data-img="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg"
+                        data-peek="images/Rajhans Precia/KZP00285.jpg"
+                      >
+                        Commercial
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-residential.html"
+                        class="expertise-nav-item"
+                        data-img="images/Aldona Villa/17_4.jpg"
+                        data-peek="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg"
+                      >
+                        Residential
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-entertainment-leisure.html"
+                        class="expertise-nav-item"
+                        data-img="images/Rajhans Precia/KZP00285.jpg"
+                        data-peek="images/Hazaribaug Bungalow/Scene 13_1.jpg"
+                      >
+                        Entertainment &amp; Leisure
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-auditoriums.html"
+                        class="expertise-nav-item"
+                        data-img="images/homepage/project 1.2.jpg.jpeg"
+                        data-peek="images/Rajhans Precia/KZP00451.jpg"
+                      >
+                        Auditoriums
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="expertise-hospitality.html"
+                        class="expertise-nav-item"
+                        data-img="images/interior/Rectangle 66.png"
+                        data-peek="images/Aldona Villa/17_4.jpg"
+                      >
+                        Hospitality
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Right: Image Card Stack with Shuffle Animation -->
+                <div class="w-[56%] flex justify-end">
+                  <div class="expertise-card-stack relative overflow-hidden">
+                    <!-- Peek Card (Bottom stacked layer) -->
+                    <div
+                      id="expertise-card-peek"
+                      class="expertise-card-peek absolute inset-0 translate-y-6 scale-[0.98] overflow-hidden shadow-xl pointer-events-none transition-transform duration-300"
+                    >
+                      <img
+                        id="expertise-img-peek"
+                        src="images/homepage/project 1.2.jpg.jpeg"
+                        alt="Preview Stack"
+                        class="expertise-img-peek w-full h-full object-cover block"
+                      />
+                    </div>
+
+                    <!-- Main Card (Top layer) -->
+                    <div
+                      id="expertise-card-main"
+                      class="expertise-card-main absolute inset-0 z-10 overflow-hidden shadow-2xl"
+                    >
+                      <img
+                        id="expertise-img-main"
+                        src="images/homepage/project 2.jpg.jpeg"
+                        alt="Architecture - Delhi Public School"
+                        class="expertise-img-main absolute inset-0 w-full h-full object-cover block will-change-transform"
+                      />
+                      <img
+                        id="expertise-img-fade"
+                        src=""
+                        alt="Crossfade Layer"
+                        class="expertise-img-fade absolute inset-0 w-full h-full object-cover block opacity-0 pointer-events-none will-change-transform"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-practice">
+            <a
+              href="about-arris.html"
+              class="hover:text-white/70 transition-colors py-2 block"
+              >PRACTICE</a
+            >
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="practice-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="about-arris.html" class="practice-nav-item">
+                      About Arris
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="about-arris.html#design-philosophy"
+                      class="practice-nav-item"
+                    >
+                      Design Philosophy
+                    </a>
+                  </li>
+                  <li>
+                    <a href="publications.html" class="practice-nav-item">
+                      Publications
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-studio">
+            <a
+              href="meet-the-team.html"
+              class="hover:text-white/70 transition-colors py-2 block"
+              >STUDIO</a
+            >
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="studio-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="meet-the-team.html" class="studio-nav-item">
+                      Meet the team
+                    </a>
+                  </li>
+                  <li>
+                    <a href="insights-journal.html" class="studio-nav-item">
+                      Insights / Journal
+                    </a>
+                  </li>
+                  <li>
+                    <a href="events.html" class="studio-nav-item"> Events </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-contact">
+            <a
+              href="contact.html"
+              class="hover:text-white/70 transition-colors py-2 block"
+              >CONTACT</a
+            >
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="contact-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="project-inquiries.html" class="contact-nav-item">
+                      Project Enquiries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="profiles.html" class="contact-nav-item">
+                      Profiles
+                    </a>
+                  </li>
+                  <li>
+                    <a href="careers.html" class="contact-nav-item">
+                      Careers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Trigger -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden text-white p-2 focus:outline-none flex flex-col justify-center items-end space-y-1.5 w-10 h-10"
+          aria-label="Toggle Navigation"
+        >
+          <span class="w-7 h-0.5 bg-white rounded-full"></span>
+          <span class="w-5 h-0.5 bg-white rounded-full"></span>
+          <span class="w-6 h-0.5 bg-white rounded-full"></span>
+        </button>
+      </nav>
+
+      <!-- Hero Bottom-Left Project Title Block -->
+      <div
+        class="relative z-10 w-full px-6 sm:px-12 xl:px-[97px] pb-12 sm:pb-16 lg:pb-20 max-w-[1920px] mx-auto mt-auto"
+      >
+        <div class="max-w-4xl" data-reveal-text>
+          <h1
+            id="hero-title"
+            class="t-display font-[300] leading-tight text-white tracking-tight"
+          >
+            Rajhans Skylar
+          </h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#0c0c0c] z-[99999] flex flex-col justify-between px-6 py-6 sm:px-12 sm:py-8 transition-all duration-300 opacity-0 pointer-events-none translate-x-full"
+    >
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="inline-block">
+          <img
+            src="images/image 7.png"
+            alt="Arris Architects Logo"
+            class="h-8 w-auto brightness-100"
+          />
+        </a>
+        <button
+          id="mobile-menu-close"
+          class="text-white p-2 focus:outline-none"
+          aria-label="Close Menu"
+        >
+          <i data-lucide="x" class="w-7 h-7"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Navigation Items Container -->
+      <div
+        class="my-auto py-4 overflow-y-auto max-h-[calc(100dvh-160px)] no-scrollbar"
+      >
+        <ul
+          class="flex flex-col space-y-4 text-white t-subheading font-[300] tracking-wide"
+        >
+          <!-- 1. Projects -->
+          <li>
+            <a
+              href="projects.html"
+              class="mobile-nav-link hover:text-white/70 transition-colors block py-1.5"
+              >Projects</a
+            >
+          </li>
+
+          <!-- 2. Expertise Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Expertise</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="expertise-architecture.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Architecture</a
+              >
+              <a
+                href="expertise-interior.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Interiors</a
+              >
+              <a
+                href="expertise-schools.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Schools</a
+              >
+              <a
+                href="expertise-cinemas.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Cinemas</a
+              >
+              <a
+                href="expertise-commercial.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Commercial</a
+              >
+              <a
+                href="expertise-residential.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Residential</a
+              >
+              <a
+                href="expertise-entertainment-leisure.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Entertainment &amp; Leisure</a
+              >
+              <a
+                href="expertise-auditoriums.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Auditoriums</a
+              >
+              <a
+                href="expertise-hospitality.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Hospitality</a
+              >
+            </div>
+          </li>
+
+          <!-- 3. Practice Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Practice</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="about-arris.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >About Arris</a
+              >
+              <a
+                href="about-arris.html#design-philosophy"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Design Philosophy</a
+              >
+              <a
+                href="testimonials.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Testimonials</a
+              >
+              <a
+                href="publications.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Publications</a
+              >
+            </div>
+          </li>
+
+          <!-- 4. Studio Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Studio</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="meet-the-team.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Meet the team</a
+              >
+              <a
+                href="insights-journal.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Insights / Journal</a
+              >
+              <a
+                href="events.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Events</a
+              >
+            </div>
+          </li>
+
+          <!-- 5. Contact Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Contact</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="contact.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Contact Us</a
+              >
+              <a
+                href="project-inquiries.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Project Enquiries</a
+              >
+              <a
+                href="profiles.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Profiles</a
+              >
+              <a
+                href="careers.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Careers</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="pt-6 border-t border-neutral-800 flex justify-between items-center t-body text-neutral-400"
+      >
+        <span>&copy; 2026 Arris Architects</span>
+        <div class="flex space-x-4 text-white">
+          <a href="#" aria-label="Instagram"
+            ><i data-lucide="instagram" class="w-4 h-4"></i
+          ></a>
+          <a
+            href="https://in.linkedin.com/company/arris-architects-pvt-ltd"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            ><i data-lucide="linkedin" class="w-4 h-4"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 2. PROJECT STORY & SPECIFICATIONS (CREAM SECTION #F4F0EB)                 -->
+    <!-- ========================================================================= -->
+    <section
+      id="project-info"
+      class="bg-arris-cream py-16 sm:py-24 lg:py-28 px-6 sm:px-12 xl:px-[97px]"
+    >
+      <div class="max-w-[1920px] mx-auto">
+        <div
+          class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-start"
+        >
+          <!-- Left Column: Tall Portrait Project Feature Image (Below specs on mobile, left on desktop) -->
+          <div class="lg:col-span-5 w-full order-2 lg:order-1">
+            <div
+              class="w-full aspect-[580/770] overflow-hidden bg-neutral-200 shadow-sm"
+              data-reveal-animation
+            >
+              <img
+                id="story-img"
+                src="images/Rajhans Skylar Commercial/Interior_Atrium_Cam13.jpg"
+                alt="Project Architectural Interior"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <!-- Right Column: Project Story & Specifications Table (Top on mobile, right on desktop) -->
+          <div
+            class="lg:col-span-7 flex flex-col pt-2 lg:pt-0 order-1 lg:order-2"
+          >
+            <!-- Narrative Description Paragraph -->
+            <p
+              id="project-description"
+              data-reveal-text
+              class="t-body font-[300] leading-[27px] text-black text-justify lg:text-left mb-12 sm:mb-16 lg:mb-24"
+            >
+              This project brings together contemporary interior spaces with a
+              thoughtfully designed landscape that complements the overall built
+              environment. Our scope focused on the atrium, lobby spaces, gym,
+              caf� and other key interior areas, creating cohesive and inviting
+              spaces through considered materials and detailing. The landscape
+              integrates lush planting with carefully placed sculptural elements
+              that soften the effect of the built form, creating a more
+              welcoming and engaging experience around the building. Together,
+              the interiors and landscape create a refined environment that
+              balances functionality, visual identity and a sense of openness.
+            </p>
+
+            <!-- Specifications Section -->
+            <div class="w-full" data-reveal-text data-delay="1">
+              <!-- Heading -->
+              <h4
+                class="t-spec-title uppercase tracking-[0.2em] text-black mb-4"
+              >
+                PROJECT SPECIFICATION
+              </h4>
+
+              <!-- Architectural Key-Value List -->
+              <div
+                class="border-t border-black/40 pt-6 space-y-4 sm:space-y-5 t-body font-[300]"
+              >
+                <!-- LOCATION -->
+                <div
+                  class="flex items-start justify-between border-b border-black/10 pb-3"
+                >
+                  <span
+                    class="uppercase tracking-[0.12em] text-neutral-700 t-spec-item"
+                    >LOCATION</span
+                  >
+                  <span
+                    id="spec-location"
+                    class="text-black text-right font-[300]"
+                    >Surat</span
+                  >
+                </div>
+
+                <!-- SCOPE -->
+                <div
+                  class="flex items-start justify-between border-b border-black/10 pb-3"
+                >
+                  <span
+                    class="uppercase tracking-[0.12em] text-neutral-700 t-spec-item"
+                    >SCOPE</span
+                  >
+                  <span
+                    id="spec-scope"
+                    class="text-black text-right font-[300] max-w-[65%]"
+                    >Commercial, Interiors, Landscape, F&amp;B</span
+                  >
+                </div>
+
+                <!-- AREA -->
+                <div
+                  class="flex items-start justify-between border-b border-black/10 pb-3"
+                >
+                  <span
+                    class="uppercase tracking-[0.12em] text-neutral-700 t-spec-item"
+                    >AREA</span
+                  >
+                  <span
+                    id="spec-site-area"
+                    class="text-black text-right font-[300]"
+                    >1,32,720, sq.ft</span
+                  >
+                </div>
+
+                <!-- STATUS -->
+                <div
+                  class="flex items-start justify-between border-b border-black/10 pb-3"
+                >
+                  <span
+                    class="uppercase tracking-[0.12em] text-neutral-700 t-spec-item"
+                    >Year of completion</span
+                  >
+                  <span
+                    id="spec-status"
+                    class="text-black text-right font-[300] flex items-center gap-1.5"
+                  >
+                    <span>2026</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 3. PROJECT GALLERY SECTION (DARK THEME #181818)                           -->
+    <!-- ========================================================================= -->
+    <section
+      id="project-gallery"
+      class="bg-arris-galleryDark text-white py-16 sm:py-24 lg:py-28 px-6 sm:px-12 xl:px-[97px]"
+    >
+      <div class="max-w-[1920px] mx-auto">
+        <!-- Section Title -->
+        <h2
+          class="t-heading font-[300] leading-snug tracking-tight text-white mb-8 sm:mb-12"
+          data-reveal-text
+        >
+          Project Gallery
+        </h2>
+
+        <!-- Visual Showcase Layout (Mobile: Stacked full-width, Desktop: Interactive Expanding Flex Accordion) -->
+        <!-- Dynamic Gallery Container -->
+        <div id="gallery-container" class="gallery-accordion w-full">
+          <!-- Gallery items will be injected by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 4. RELATED PROJECTS SECTION (CREAM #F4F0EB)                               -->
+    <!-- ========================================================================= -->
+    <section
+      id="related-projects"
+      class="bg-arris-cream py-16 sm:py-24 lg:py-28 px-6 sm:px-12 xl:px-[97px] border-b border-neutral-300"
+    >
+      <div class="max-w-[1920px] mx-auto">
+        <!-- Section Title -->
+        <h2
+          class="text-black t-heading font-[300] leading-snug tracking-normal mb-10 sm:mb-14"
+          data-reveal-text
+        >
+          Related Projects
+        </h2>
+
+        <!-- 3 Related Project Cards -->
+        <div
+          id="related-projects-grid"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-[38px] gap-y-12 sm:gap-y-16 lg:gap-y-20"
+        >
+          <!-- Cards will be populated dynamically from projects-data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 5. CONTACT US (EXACT FIGMA TYPOGRAPHY & LAYOUT)                           -->
+    <!-- ========================================================================= -->
+    <section
+      id="contact"
+      class="bg-arris-cream pt-20 sm:pt-28 pb-20 sm:pb-24 px-6 sm:px-12 xl:px-[97px]"
+    >
+      <div class="max-w-[1920px] mx-auto">
+        <h2
+          class="text-black t-heading font-[300] leading-snug tracking-tight mb-2 sm:mb-3"
+          data-reveal-text
+        >
+          Contact us
+        </h2>
+        <p
+          class="text-black t-body font-[300] leading-[27px] max-w-[646px] mb-8 sm:mb-12 lg:mb-16"
+          data-reveal-text
+          data-delay="1"
+        >
+          Have any questions? Feel free to contact us for more information.
+        </p>
+
+        <!-- 3 Contact Columns (Stacked on mobile, 3-col on desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 lg:gap-16">
+          <!-- Column 1: Email -->
+          <div data-reveal-text>
+            <i
+              data-lucide="mail"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">
+              Email
+            </h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question or idea? Drop us an email we'd love to hear from
+              you.
+            </p>
+            <a
+              href="mailto:arrisarch@gmail.com"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              arrisarch@gmail.com
+            </a>
+          </div>
+
+          <!-- Column 2: Phone -->
+          <div data-reveal-text data-delay="1">
+            <i
+              data-lucide="phone"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">
+              Phone
+            </h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question? Give us a call &mdash; we're happy to help.
+            </p>
+            <a
+              href="tel:+912225829387"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              +912225829387, +912225828996
+            </a>
+          </div>
+
+          <!-- Column 3: Office -->
+          <div data-reveal-text data-delay="2">
+            <i
+              data-lucide="map-pin"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">
+              Office
+            </h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Find us at our office.
+            </p>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="t-body font-[300] text-neutral-900 underline leading-[27px] hover:text-neutral-600 transition-colors block"
+            >
+              711-713 Opal Square, SG Barve Rd, opp. Railadevi TMC Office, Wagle
+              Industrial Estate, Thane West, Thane, Maharashtra 400604
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 6. FOOTER (DARK THEME)                                                    -->
+    <!-- ========================================================================= -->
+<div id="footer-placeholder"></div>
+
+    <!-- Include Projects Data -->
+    <script src="projects-data.js"></script>
+
+    <!-- Dynamic Page Renderer & Interactions -->
+    <script>
+      // Initialize icons
+      lucide.createIcons();
+
+      // Mobile Drawer Toggle
+      const menuBtn = document.getElementById("mobile-menu-btn");
+      const closeBtn = document.getElementById("mobile-menu-close");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const navLinks = document.querySelectorAll(".mobile-nav-link");
+
+      function openMenu() {
+        mobileMenu.classList.remove(
+          "opacity-0",
+          "pointer-events-none",
+          "translate-x-full",
+        );
+        mobileMenu.classList.add(
+          "opacity-100",
+          "pointer-events-auto",
+          "translate-x-0",
+        );
+        document.body.classList.add("overflow-hidden");
+      }
+
+      function closeMenu() {
+        mobileMenu.classList.remove(
+          "opacity-100",
+          "pointer-events-auto",
+          "translate-x-0",
+        );
+        mobileMenu.classList.add(
+          "opacity-0",
+          "pointer-events-none",
+          "translate-x-full",
+        );
+        document.body.classList.remove("overflow-hidden");
+      }
+
+      if (menuBtn) menuBtn.addEventListener("click", openMenu);
+      if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+      navLinks.forEach((link) => link.addEventListener("click", closeMenu));
+
+      // Get Project ID from URL query param ?id=... (defaults to 'rajhans-skylar')
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = urlParams.get("id") || "rajhans-skylar";
+
+      const project =
+        ARRIS_PROJECTS[projectId] || ARRIS_PROJECTS["rajhans-skylar"];
+
+      // Update Page Meta
+      document.title = `${project.title} | ARRIS ARCHITECTS`;
+
+      // Render Hero Section
+      const heroBgImg = document.getElementById("hero-bg-img");
+      const heroTitle = document.getElementById("hero-title");
+      if (heroBgImg) {
+        heroBgImg.src = project.heroImage;
+        heroBgImg.alt = project.title;
+        if (project.heroPosition) {
+          heroBgImg.style.objectPosition = project.heroPosition;
+        }
+      }
+      if (heroTitle) {
+        heroTitle.textContent = project.title;
+      }
+
+      // Render Story Section
+      const storyImg = document.getElementById("story-img");
+      const projectDesc = document.getElementById("project-description");
+      if (storyImg) {
+        storyImg.src = project.storyImage;
+        storyImg.alt = `${project.title} Architectural Interior`;
+      }
+      if (projectDesc) {
+        projectDesc.textContent = project.description;
+      }
+
+      // Render Specifications
+      document.getElementById("spec-location").textContent =
+        project.specs.location;
+      document.getElementById("spec-scope").textContent = project.specs.scope;
+      document.getElementById("spec-site-area").textContent =
+        project.specs.siteArea;
+
+      const specStatus = document.getElementById("spec-status");
+      if (specStatus) {
+        const isOngoing = project.specs.status
+          .toLowerCase()
+          .includes("ongoing");
+        specStatus.innerHTML = `
+        ${isOngoing ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>' : ""}
+        <span>${project.specs.status}</span>
+      `;
+      }
+      // 3. Update Gallery Images Dynamically
+      const galleryContainer = document.getElementById("gallery-container");
+      if (project.gallery && project.gallery.length > 0) {
+        galleryContainer.innerHTML = project.gallery
+          .map(
+            (item, index) => `
+        <div class="gallery-item group" data-index="${index}">
+          <div class="gallery-overlay"></div>
+          <img 
+            src="${item.url}" 
+            alt="${item.alt || project.title + " Gallery " + (index + 1)}" 
+            class="w-full h-full object-cover"
+            style="${item.position ? `object-position: ${item.position};` : ""}"
+          />
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      // 4. Initialize GSAP Scroll Animations for project details
+
+      // Render Related Projects
+      const relatedContainer = document.getElementById("related-projects-grid");
+      if (relatedContainer && project.related) {
+        relatedContainer.innerHTML = "";
+        project.related.forEach((relId) => {
+          const relProj = ARRIS_PROJECTS[relId];
+          if (!relProj) return;
+
+          const card = document.createElement("a");
+          card.href = `project-detail.html?id=${relProj.id}`;
+          card.className =
+            "project-card related-card group cursor-pointer block";
+
+          // Special positioning for AHS Hazaribaug to prevent "Angel" from being cut off
+          const imgStyle =
+            relProj.id === "ahs-hazaribaug"
+              ? 'style="object-position: right center;"'
+              : "";
+
+          card.innerHTML = `
+          <div class="relative w-full aspect-[550/803] overflow-hidden bg-neutral-200" data-reveal-animation>
+            <img 
+              src="${relProj.cardImage}" 
+              alt="${relProj.title}" 
+              class="project-img w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              ${imgStyle}
+            />
+            <!-- Minimalist Center Frame Reveal on Hover -->
+            <div class="absolute inset-0 z-10 bg-black/55 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-center items-center p-6 text-center">
+              <div class="w-full h-full border border-white/30 p-6 flex flex-col justify-center items-center gap-3 scale-95 group-hover:scale-100 transition-transform duration-500">
+                <h2 class="t-subheading font-[300] text-white tracking-wide">
+                  ${relProj.title}
+                </h2>
+                <span class="inline-flex items-center gap-1.5 text-xs tracking-widest uppercase text-white/80 font-[300] border-b border-white/60 pb-1 hover:border-white">
+                  View Project →
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between t-nav tracking-[0.08em] uppercase text-neutral-800 font-[300]">
+            <span>${relProj.category}</span>
+            <span>${relProj.location}</span>
+            <span>${relProj.year}</span>
+          </div>
+        `;
+          relatedContainer.appendChild(card);
+        });
+      }
+
+      // Initialize Accordion interactions AFTER injecting items
+      const galleryItems = document.querySelectorAll(".gallery-item");
+      const galleryAccordion = document.getElementById("gallery-container");
+
+      if (galleryAccordion && galleryItems.length) {
+        galleryItems.forEach((item) => {
+          item.addEventListener("click", (e) => {
+            if (window.innerWidth < 768) return; // Mobile uses full-width vertical stack
+            const isAlreadyActive = item.classList.contains("active");
+            galleryItems.forEach((i) => i.classList.remove("active"));
+
+            if (!isAlreadyActive) {
+              item.classList.add("active");
+              galleryAccordion.classList.add("has-active");
+            } else {
+              galleryAccordion.classList.remove("has-active");
+            }
+          });
+        });
+
+        // Clear active state on outside click
+        document.addEventListener("click", (e) => {
+          if (!galleryAccordion.contains(e.target)) {
+            galleryItems.forEach((i) => i.classList.remove("active"));
+            galleryAccordion.classList.remove("has-active");
+          }
+        });
+      }
+    </script>
+
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <!-- GSAP & Core Animations Runtime -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="animations.js"></script>
+    <script src="component.js"></script>
+  </body>
+</html>

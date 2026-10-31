@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publications | ARRIS ARCHITECTS</title>
+
+  <!-- Local SF Pro Fonts & Animations -->
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="animations.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"SF Pro Display"', '"SF Pro"', '"SF Pro Text"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"SF Pro Display"', '"SF Pro"', 'sans-serif'],
+            text: ['"SF Pro Text"', '"SF Pro"', 'sans-serif'],
+          },
+          fontWeight: {
+            light: '300',
+            normal: '300',
+            medium: '400',
+            semibold: '500',
+            bold: '700',
+          },
+          colors: {
+            arris: {
+              cream: '#F4F0EB',
+              creamDark: '#EAE5DD',
+              dark: '#121212',
+              cardDark: '#151515',
+              footerDark: '#161616',
+              navy: '#001A33',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: "SF Pro Display", "SF Pro", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 300;
+      background-color: #F4F0EB;
+      color: #000000;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      image-rendering: auto;
+    }
+
+    /* Publication section heading with trailing line - luxury architectural reveal */
+    .pub-heading {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .pub-heading .pub-title {
+      white-space: nowrap;
+    }
+    .pub-heading .pub-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.2);
+      margin-left: 24px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: transform 1.3s cubic-bezier(0.19, 1, 0.22, 1) 0.25s;
+    }
+    .pub-heading.is-revealed .pub-line {
+      transform: scaleX(1);
+    }
+
+    /* Publication card animation & hover - harmonized with animations.css */
+    .pub-card {
+      transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 0.6s cubic-bezier(0.19, 1, 0.22, 1) !important;
+      cursor: pointer;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .pub-card.is-revealed:hover {
+      transform: translateY(-8px) !important;
+    }
+    .pub-card .pub-img-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+      transition: box-shadow 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      aspect-ratio: 3 / 4.2;
+      background: #fff;
+    }
+    .pub-card .pub-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pub-card:hover .pub-img-wrap {
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.12);
+    }
+    .pub-card .pub-img-wrap.is-revealed img,
+    .pub-card .pub-img-wrap.animation-complete img {
+      transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .pub-card:hover .pub-img-wrap.is-revealed img,
+    .pub-card:hover .pub-img-wrap.animation-complete img {
+      transform: scale(1.045);
+    }
+
+    /* Isolated card title font size (mobile & desktop strictly 24px) */
+    .pub-card h3 {
+      font-size: 24px !important;
+      line-height: 1.3 !important;
+    }
+
+    /* -- PDF Viewer Modal ---------------------------------------------------- */
+    #pdf-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+    }
+    #pdf-modal.is-open { display: flex; }
+
+    #pdf-modal .pdf-modal-inner {
+      display: flex;
+      flex-direction: column;
+      width: 98vw;
+      max-width: 1400px;
+      height: 96vh;
+      background: #111;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    }
+    .pdf-modal-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #0d0d0d;
+      flex-shrink: 0;
+      min-height: 48px;
+    }
+    .pdf-modal-title {
+      color: rgba(255,255,255,0.75);
+      font-size: 16px;
+      font-family: -apple-system, sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100% - 50px);
+    }
+    #pdf-modal-close {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    #pdf-modal-close:hover { background: rgba(255,255,255,0.25); }
+
+    .pdf-embed-wrap {
+      flex: 1;
+      overflow: hidden;
+      background: #2a2a2a;
+    }
+    .pdf-embed-wrap object,
+    .pdf-embed-wrap embed {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    </style>
+</head>
+<body class="bg-arris-cream text-black antialiased">
+
+  <!-- ========================================================================= -->
+  <!-- 1. HERO SECTION WITH NAVIGATION (CONFERENCE ROOM BG - FIGMA)              -->
+  <!-- ========================================================================= -->
+  <header id="hero-section" class="relative w-full h-[85vh] sm:h-[75vh] lg:h-[90vh] min-h-[520px] overflow-hidden z-10">
+    <!-- Hero Background (Navy Color matching insights-journal.html) -->
+    <div class="hero-media-wrapper bg-arris-navy bg-[#001A33] show">
+      <!-- Gradient overlay for legibility (matches insights-journal.html) -->
+      <div
+        class="absolute inset-0 pointer-events-none"
+        style="background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.35) 100%);"
+      ></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="relative z-20 flex items-center justify-between px-6 sm:px-12 xl:px-[97px] py-6 sm:py-8 max-w-[1920px] mx-auto hero-nav-animate">
+        <!-- Logo -->
+        <a href="index.html" class="inline-block">
+          <img src="images/image 7.png" alt="Arris Architects Logo" class="h-9 sm:h-10 lg:h-12 w-auto" />
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <ul class="hidden lg:flex items-center gap-8 md:gap-10 lg:gap-[130px] text-white t-nav font-[300] tracking-[0.11em] uppercase">
+          <li>
+            <a href="projects.html" class="hover:text-white/70 transition-colors py-2 block">PROJECTS</a>
+          </li>
+          
+          <li class="nav-dropdown-expertise">
+            <a
+              href="architecture.html"
+              class="font-[300] text-white hover:text-white/70 transition-colors py-2 block"
+              >EXPERTISE</a
+            >
+            <!-- Mega Dropdown Panel with Image Shuffle -->
+            <div class="expertise-dropdown-menu">
+              <div class="flex items-center justify-between gap-6 lg:gap-10 xl:gap-14 w-full">
+                <!-- Left: Category List -->
+                <div class="w-[44%] flex flex-col justify-center">
+                  <ul class="flex flex-col space-y-2 xl:space-y-2.5">
+                    <li>
+                      <a href="architecture.html" class="expertise-nav-item active" data-img="images/Hazaribaug Bungalow/Scene 13_1.jpg" data-peek="images/interior/Rectangle 66.png">
+                        Architecture
+                      </a>
+                    </li>
+                    <li>
+                      <a href="expertise-                      <a href="schools.html" class="expertise-nav-item" data-img="images/homepage/project 2.jpg.jpeg" data-peek="images/Rajhans Precia/KZP00451.jpg">
+                        Schools
+                      </a>
+                    </li>
+                    <li>
+                      <a href="cinemas.html" class="expertise-nav-item" data-img="images/Devgn Cinex Bellona/4.jpeg" data-peek="images/homepage/project 1.2.jpg.jpeg">
+                        Cinemas
+                      </a>
+                    </li>
+                    <li>
+                      <a href="commercial.html" class="expertise-nav-item" data-img="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg" data-peek="images/Rajhans Precia/KZP00285.jpg">
+                        Commercial
+                      </a>
+                    </li>
+                    <li>
+                      <a href="residential.html" class="expertise-nav-item" data-img="images/Aldona Villa/17_4.jpg" data-peek="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg">
+                        Residential
+                      </a>
+                    </li>
+                    <li>
+                      <a href="entertainment-leisure.html" class="expertise-nav-item" data-img="images/Rajhans Precia/KZP00285.jpg" data-peek="images/Hazaribaug Bungalow/Scene 13_1.jpg">
+                        Entertainment &amp; Leisure
+                      </a>
+                    </li>
+                    <li>
+                      <a href="auditoriums.html" class="expertise-nav-item" data-img="images/homepage/project 1.2.jpg.jpeg" data-peek="images/Rajhans Precia/KZP00451.jpg">
+                        Auditoriums
+                      </a>
+                    </li>
+                    <li>
+                      <a href="hospitality.html" class="expertise-nav-item" data-img="images/interior/Rectangle 66.png" data-peek="images/Aldona Villa/17_4.jpg">
+                        Hospitality
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Right: Image Card Stack with Shuffle Animation -->
+                <div class="w-[56%] flex justify-end">
+                  <div class="expertise-card-stack relative overflow-hidden">
+                    <div id="expertise-card-peek" class="expertise-card-peek absolute inset-0 translate-y-6 scale-[0.98] overflow-hidden shadow-xl pointer-events-none transition-transform duration-300">
+                      <img id="expertise-img-peek" src="images/homepage/project 1.2.jpg.jpeg" alt="Preview Stack" class="expertise-img-peek w-full h-full object-cover block" />
+                    </div>
+                    <div id="expertise-card-main" class="expertise-card-main absolute inset-0 z-10 overflow-hidden shadow-2xl">
+                      <img id="expertise-img-main" src="images/homepage/project 2.jpg.jpeg" alt="Preview" class="expertise-img-main absolute inset-0 w-full h-full object-cover block will-change-transform" />
+                      <img id="expertise-img-fade" src="" alt="Crossfade" class="expertise-img-fade absolute inset-0 w-full h-full object-cover block opacity-0 pointer-events-none will-change-transform" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-practice">
+            <a href="about-arris.html" class="font-[300] text-white hover:text-white/70 transition-colors py-2 block">PRACTICE</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="practice-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="about-arris.html" class="practice-nav-item">
+                      About Arris
+                    </a>
+                  </li>
+                  <li>
+                    <a href="about-arris.html#design-philosophy" class="practice-nav-item">
+                      Design Philosophy
+                    </a>
+                  </li>
+                  <li>
+                    <a href="publications.html" class="practice-nav-item">
+                      Publications
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+                    <li class="nav-dropdown-studio">
+            <a href="meet-the-team.html" class="hover:text-white/70 transition-colors py-2 block">STUDIO</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="studio-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="meet-the-team.html" class="studio-nav-item">
+                      Meet the team
+                    </a>
+                  </li>
+                  <li>
+                    <a href="insights-journal.html" class="studio-nav-item">
+                      Insights / Journal
+                    </a>
+                  </li>
+                  <li>
+                    <a href="events.html" class="studio-nav-item">
+                      Events
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-contact">
+            <a href="contact.html" class="hover:text-white/70 transition-colors py-2 block">CONTACT</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="contact-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="project-inquiries.html" class="contact-nav-item">
+                      Project Enquiries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="profiles.html" class="contact-nav-item">
+                      Profiles
+                    </a>
+                  </li>
+                  <li>
+                    <a href="careers.html" class="contact-nav-item">
+                      Careers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="lg:hidden text-white p-2 focus:outline-none flex flex-col justify-center items-end space-y-1.5 w-10 h-10" aria-label="Toggle Navigation">
+          <span class="w-7 h-0.5 bg-white rounded-full"></span>
+          <span class="w-5 h-0.5 bg-white rounded-full"></span>
+          <span class="w-6 h-0.5 bg-white rounded-full"></span>
+        </button>
+      </nav>
+
+      <!-- Hero Text Overlay (Bottom Left - entrance fade & lift matching Homepage) -->
+      <div class="absolute bottom-12 sm:bottom-16 lg:bottom-20 left-6 sm:left-12 xl:left-[97px] z-10 hero-content-animate">
+        <h1 class="text-white t-display font-[300] leading-tight tracking-normal">
+          Publications
+        </h1>
+      </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay (Matching Homepage Accordion Architecture) -->
+  <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#0c0c0c] z-[99999] flex flex-col justify-between px-6 py-6 sm:px-12 sm:py-8 transition-all duration-300 opacity-0 pointer-events-none translate-x-full"
+    >
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="inline-block">
+          <img
+            src="images/image 7.png"
+            alt="Arris Architects Logo"
+            class="h-8 w-auto brightness-100"
+          />
+        </a>
+        <button
+          id="mobile-menu-close"
+          class="text-white p-2 focus:outline-none"
+          aria-label="Close Menu"
+        >
+          <i data-lucide="x" class="w-7 h-7"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Navigation Items Container -->
+      <div
+        class="my-auto py-4 overflow-y-auto max-h-[calc(100dvh-160px)] no-scrollbar"
+      >
+        <ul
+          class="flex flex-col space-y-4 text-white t-subheading font-[300] tracking-wide"
+        >
+          <!-- 1. Projects -->
+          <li>
+            <a
+              href="projects.html"
+              class="mobile-nav-link hover:text-white/70 transition-colors block py-1.5"
+              >Projects</a
+            >
+          </li>
+
+          <!-- 2. Expertise Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Expertise</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="architecture.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Architecture</a
+              >
+              <a
+                href="interior.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Interiors</a
+              >
+              <a
+                href="schools.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Schools</a
+              >
+              <a
+                href="cinemas.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Cinemas</a
+              >
+              <a
+                href="commercial.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Commercial</a
+              >
+              <a
+                href="residential.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Residential</a
+              >
+              <a
+                href="entertainment-leisure.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Entertainment &amp; Leisure</a
+              >
+              <a
+                href="auditoriums.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Auditoriums</a
+              >
+              <a
+                href="hospitality.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Hospitality</a
+              >
+            </div>
+          </li>
+
+          <!-- 3. Practice Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Practice</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="about-arris.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >About Arris</a
+              >
+              <a
+                href="about-arris.html#design-philosophy"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Design Philosophy</a
+              >
+              <a
+                href="testimonials.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Testimonials</a
+              >
+              <a
+                href="publications.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Publications</a
+              >
+            </div>
+          </li>
+
+          <!-- 4. Studio Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Studio</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="meet-the-team.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Meet the team</a
+              >
+              <a
+                href="insights-journal.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Insights / Journal</a
+              >
+              <a
+                href="events.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Events</a
+              >
+            </div>
+          </li>
+
+          <!-- 5. Contact Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Contact</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="contact.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Contact Us</a
+              >
+              <a
+                href="project-inquiries.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Project Enquiries</a
+              >
+              <a
+                href="profiles.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Profiles</a
+              >
+              <a
+                href="careers.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Careers</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="pt-6 border-t border-neutral-800 flex justify-between items-center t-body text-neutral-400"
+      >
+        <span>&copy; 2026 Arris Architects</span>
+        <div class="flex space-x-4 text-white">
+          <a href="#" aria-label="Instagram"
+            ><i data-lucide="instagram" class="w-4 h-4"></i
+          ></a>
+          <a href="https://in.linkedin.com/company/arris-architects-pvt-ltd" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+            ><i data-lucide="linkedin" class="w-4 h-4"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. PUBLICATIONS GRID                                                      -->
+  <!-- ========================================================================= -->
+  <section class="bg-arris-cream py-16 sm:py-20 lg:py-28 px-6 sm:px-12 xl:px-[97px]">
+    <div class="max-w-[1280px] mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 sm:gap-x-16 lg:gap-x-20 gap-y-16 sm:gap-y-20 lg:gap-y-24 justify-items-center">
+
+          <!-- Card 1: Atlas of World Interior Design -->
+          <div class="pub-card group" data-reveal-text>
+            <div class="pub-pdf-trigger cursor-pointer" data-pdf="images/publications/intl publication 1 atlas.pdf">
+              <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+                <img
+                  src="images/publications/internation publication 1 atlas.png"
+                  alt="Atlas of World Interior Design - Arris Architects Publication"
+                />
+              </div>
+              <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+                Atlas of World Interior Design
+              </h3>
+            </div>
+          </div>
+
+          <!-- Card 2: Audio Visual World -->
+          <div class="pub-card group" data-reveal-text data-delay="1">
+            <div class="pub-pdf-trigger cursor-pointer" data-pdf="images/publications/intl publication 2 av world.pdf">
+              <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+                <img
+                  src="images/publications/2.png"
+                  alt="Audio Visual World - Arris Architects Publication"
+                />
+              </div>
+              <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+                Audio Visual World
+              </h3>
+            </div>
+          </div>
+
+          <!-- Card 3: Cinema Architecture -->
+          <div class="pub-card group" data-reveal-text data-delay="2">
+            <div class="pub-pdf-trigger cursor-pointer" data-pdf="images/publications/intl publication 3 cinema architecture.pdf">
+              <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+                <img
+                  src="images/publications/cinema-arch.png"
+                  alt="Cinema Architecture - Arris Architects Publication"
+                />
+              </div>
+              <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+                Cinema Architecture
+              </h3>
+            </div>
+          </div>
+
+          <!-- Card 4: Shetty Cinemas, Kalaburgi -->
+          <a href="https://issuu.com/theatreworld/docs/theatremagic_june_-_august_2025/21" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/1.png"
+                alt="Shetty Cinemas Kalaburgi - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Shetty Cinemas, Kalaburgi
+            </h3>
+          </a>
+
+          <!-- Card 5: Sri Sakthi Cinemas, Erode -->
+          <a href="https://issuu.com/theatreworld/docs/theatremagic_june_-_august_2025/29" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="1">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/1.png"
+                alt="Sri Sakthi Cinemas Erode - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Sri Sakthi Cinemas, Erode
+            </h3>
+          </a>
+
+          <!-- Card 6: DNC Cinemas, Salem -->
+          <a href="https://issuu.com/theatreworld/docs/theatremagic_march_-_may_2025/31" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="2">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/3.png"
+                alt="DNC Cinemas Salem - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              DNC Cinemas, Salem
+            </h3>
+          </a>
+
+          <!-- Card 7: Rajhans Cinemas Precia, Vesu, Surat -->
+          <a href="https://issuu.com/theatreworld/docs/theatremagic_march_-_may_2025/39" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/3.png"
+                alt="Rajhans Cinemas Precia Vesu Surat - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Rajhans Cinemas Precia, Vesu, Surat
+            </h3>
+          </a>
+
+          <!-- Card 8: Devgn [NY] Cinemas Swagat, Gandhinagar -->
+          <a href="https://issuu.com/theatreworld/docs/theatremagic_march_-_may_2025/45" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="1">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/3.png"
+                alt="Devgn NY Cinemas Swagat Gandhinagar - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Devgn [NY] Cinemas Swagat, Gandhinagar
+            </h3>
+          </a>
+
+          <!-- Card 9: Rajhans CBD Mall, Ahmedabad -->
+          <a href="https://issuu.com/theatreworld/docs/102b_theatremagic-decmber2024-february2025/23" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="2">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/6.png"
+                alt="Rajhans CBD Mall Ahmedabad - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Rajhans CBD Mall, Ahmedabad
+            </h3>
+          </a>
+
+          <!-- Card 10: Devgn [NY] Cinex, Elan Epic Mall, Gurugram -->
+          <a href="https://issuu.com/theatreworld/docs/102b_theatremagic-decmber2024-february2025/34" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/6.png"
+                alt="Devgn NY Cinex Elan Epic Mall Gurugram - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Devgn [NY] Cinex, Elan Epic Mall, Gurugram
+            </h3>
+          </a>
+
+          <!-- Card 11: Varadaraja Cinemas, Chennai -->
+          <a href="https://issuu.com/theatreworld/docs/97b_theatremagic-september-november2023/17" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="1">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/8.png"
+                alt="Varadaraja Cinemas Chennai - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Varadaraja Cinemas, Chennai
+            </h3>
+          </a>
+
+          <!-- Card 12: Rajhans Cinemas, Surat -->
+          <a href="https://issuu.com/theatreworld/docs/98b_theatremagic-decmber2023-february2024_1_/23" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="2">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/9.png"
+                alt="Rajhans Cinemas Surat - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Rajhans Cinemas, Surat
+            </h3>
+          </a>
+
+          <!-- Card 13: Devgn [NY] Cinex, Guwahati -->
+          <a href="https://issuu.com/theatreworld/docs/96b_theatremagic-june-august2023/27" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/10.png"
+                alt="Devgn NY Cinex Guwahati - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Devgn [NY] Cinex, Guwahati
+            </h3>
+          </a>
+
+          <!-- Card 14: Rajhans Cinemas, Galaxy Diamond Plaza, Greater Noida (Rajhans Cinemas, Pune) -->
+          <a href="https://issuu.com/theatreworld/docs/93b_theatremagic-september-november2022/19" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="1">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/11.png"
+                alt="Rajhans Cinemas Galaxy Diamond Plaza Greater Noida - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Rajhans Cinemas, Galaxy Diamond Plaza, Greater Noida (Rajhans Cinemas, Pune)
+            </h3>
+          </a>
+
+          <!-- Card 15: Devgn [NY] Cinex, Ahmedabad -->
+          <a href="https://issuu.com/theatreworld/docs/95b_theatremagic-march-may2023/25" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="2">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/12.png"
+                alt="Devgn NY Cinex Ahmedabad - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Devgn [NY] Cinex, Ahmedabad
+            </h3>
+          </a>
+
+          <!-- Card 16: Rajhans Cinemas, Rajmahal Mall, Sitanagar, Surat -->
+          <a href="https://issuu.com/theatreworld/docs/95b_theatremagic-march-may2023/29" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/12.png"
+                alt="Rajhans Cinemas Rajmahal Mall Sitanagar Surat - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Rajhans Cinemas, Rajmahal Mall, Sitanagar, Surat
+            </h3>
+          </a>
+
+          <!-- Card 17: Fun Cinemas, Andheri -->
+          <a href="https://www.arris-architects.com/publications/theatre-world/pdf/commercial.pdf" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="1">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/14.jpeg"
+                alt="Fun Cinemas Andheri - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Fun Cinemas, Andheri
+            </h3>
+          </a>
+
+          <!-- Card 18: I-GEN 50 -->
+          <a href="https://share.google/Pkn0blHD31RoGv6Im" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text data-delay="2">
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/15.png"
+                alt="I-GEN 50 - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              I-GEN 50
+            </h3>
+          </a>
+
+          <!-- Card 19: Design Matrix -->
+          <a href="https://www.arris-architects.com/publications/theatre-world/pdf/leisure-design.pdf" target="_blank" rel="noopener noreferrer" class="pub-card group block text-inherit no-underline" data-reveal-text>
+            <div class="pub-img-wrap w-full overflow-hidden bg-black/5 mb-4" data-reveal-animation>
+              <img
+                src="images/publications/design-matrix.png"
+                alt="Design Matrix - Arris Architects Publication"
+              />
+            </div>
+            <h3 class="text-black t-subheading font-[300] leading-snug tracking-normal">
+              Design Matrix
+            </h3>
+          </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 5. CONTACT SECTION (MATCHING HOMEPAGE)                                     -->
+  <!-- ========================================================================= -->
+  <section id="contact" class="bg-arris-cream py-16 sm:py-24 px-6 sm:px-12 xl:px-[97px]">
+      <div class="max-w-[1920px] mx-auto">
+        <h2
+          class="text-black t-heading font-[300] leading-snug tracking-tight mb-2 sm:mb-3"
+          data-reveal-text
+        >
+          Contact us
+        </h2>
+        <p
+          class="text-black t-body font-[300] leading-[27px] max-w-[646px] mb-8 sm:mb-12 lg:mb-16"
+          data-reveal-text
+          data-delay="1"
+        >
+          Have any questions? Feel free to contact us for more information.
+        </p>
+
+        <!-- 3 Contact Columns (Stacked on mobile, 3-col on desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 lg:gap-16">
+          <!-- Column 1: Email -->
+          <div data-reveal-text>
+            <i
+              data-lucide="mail"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">Email</h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question or idea? Drop us an email we'd love to hear from
+              you.
+            </p>
+            <a
+              href="mailto:arrisarch@gmail.com"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              arrisarch@gmail.com
+            </a>
+          </div>
+
+          <!-- Column 2: Phone -->
+          <div data-reveal-text data-delay="1">
+            <i
+              data-lucide="phone"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">Phone</h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question? Give us a call &mdash; we're happy to help.
+            </p>
+            <a
+              href="tel:+912225829387"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              +912225829387, +912225828996
+            </a>
+          </div>
+
+          <!-- Column 3: Office -->
+          <div data-reveal-text data-delay="2">
+            <i
+              data-lucide="map-pin"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">
+              Office
+            </h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Find us at our office.
+            </p>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="t-body font-[300] text-neutral-900 underline leading-[27px] hover:text-neutral-600 transition-colors block"
+            >
+              711-713 Opal Square, SG Barve Rd, opp. Railadevi TMC Office, Wagle
+              Industrial Estate, Thane West, Thane, Maharashtra 400604
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 6. FOOTER (DARK THEME)                                                     -->
+  <!-- ========================================================================= -->
+<div id="footer-placeholder"></div>
+
+  <!-- Scripts -->
+  <script>
+    lucide.createIcons();
+
+    // Mobile Drawer Toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const closeBtn = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function openMenu() {
+      mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-x-full');
+      mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-x-0');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-x-0');
+      mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-x-full');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    navLinks.forEach(link => link.addEventListener('click', closeMenu));
+  </script>
+
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- GSAP & Core Animations Runtime -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="animations.js"></script>
+
+  <!-- ========================================================================= -->
+  <!-- PDF VIEWER MODAL (PDF.js canvas renderer)                                 -->
+  <!-- ========================================================================= -->
+  <div id="pdf-modal" role="dialog" aria-modal="true" aria-label="PDF Viewer">
+    <div class="pdf-modal-inner">
+      <div class="pdf-modal-topbar">
+        <span id="pdf-modal-title" class="pdf-modal-title"></span>
+        <button id="pdf-modal-close" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="pdf-embed-wrap" id="pdf-embed-wrap"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var modal     = document.getElementById('pdf-modal');
+      var modalBody = document.getElementById('pdf-embed-wrap');
+      var closeBtn  = document.getElementById('pdf-modal-close');
+      var titleEl   = document.getElementById('pdf-modal-title');
+      var triggers  = document.querySelectorAll('[data-pdf]');
+
+      function openPDF(src, label) {
+        // Encode each path segment so spaces work correctly
+        var encoded = src.split('/').map(function(p) { return encodeURIComponent(p); }).join('/');
+
+        // Re-create the viewer element on every open so the browser
+        // always loads the fresh PDF (avoids stale cached PDF bug).
+        modalBody.innerHTML = '';
+        var obj = document.createElement('object');
+        obj.setAttribute('type', 'application/pdf');
+        obj.setAttribute('data', encoded);
+        obj.setAttribute('width', '100%');
+        obj.setAttribute('height', '100%');
+
+        var embed = document.createElement('embed');
+        embed.setAttribute('type', 'application/pdf');
+        embed.setAttribute('src', encoded);
+        embed.setAttribute('width', '100%');
+        embed.setAttribute('height', '100%');
+
+        obj.appendChild(embed);
+        modalBody.appendChild(obj);
+
+        titleEl.textContent = label || '';
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePDF() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+        // Clear after transition so the viewer stops
+        setTimeout(function() {
+          modalBody.innerHTML = '';
+        }, 200);
+      }
+
+      triggers.forEach(function(el) {
+        el.addEventListener('click', function() {
+          var src   = el.getAttribute('data-pdf');
+          var label = el.querySelector('h3') ? el.querySelector('h3').textContent.trim() : '';
+          openPDF(src, label);
+        });
+      });
+
+      closeBtn.addEventListener('click', closePDF);
+      modal.addEventListener('click', function(e) { if (e.target === modal) closePDF(); });
+      document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePDF(); });
+    })();
+  </script>
+<script src="component.js"></script>
+</body>
+</html>
+

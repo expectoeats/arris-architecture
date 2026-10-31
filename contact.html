@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | ARRIS ARCHITECTS</title>
+
+  <!-- Google Fonts: Cormorant Garamond for luxury serif typography matching Figma -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+  <!-- Local SF Pro Fonts & Animations -->
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="animations.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"SF Pro Display"', '"SF Pro"', '"SF Pro Text"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['"SF Pro Display"', '"SF Pro"', 'sans-serif'],
+            text: ['"SF Pro Text"', '"SF Pro"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            cormorant: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+          },
+          fontWeight: {
+            light: '300',
+            normal: '400',
+            medium: '500',
+            semibold: '600',
+            bold: '700',
+          },
+          colors: {
+            arris: {
+              cream: '#F4F0EB',
+              creamDark: '#EAE5DD',
+              dark: '#121212',
+              cardDark: '#1E1E1E',
+              footerDark: '#161616',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: "SF Pro Display", "SF Pro", "SF Pro Text", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 300;
+      background-color: #F4F0EB;
+      color: #000000;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .font-cormorant {
+      font-family: "Cormorant Garamond", Georgia, serif;
+    }
+
+    img {
+      image-rendering: auto;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Navbar Dropdown for PRACTICE */
+    .nav-dropdown {
+      position: relative;
+    }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      min-width: 220px;
+      background: rgba(22, 22, 22, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 0;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+      z-index: 100;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu li {
+      width: 100%;
+    }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 22px;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-align: left;
+      white-space: nowrap;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+    .nav-dropdown-menu a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* Contact Form Styles Matching Figma */
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 28px;
+    }
+    @media (min-width: 1024px) {
+      .form-row {
+        margin-bottom: 40px;
+      }
+    }
+    .form-row-label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 1.35;
+      margin-bottom: 12px;
+      font-family: "SF Pro Display", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    @media (min-width: 1024px) {
+      .form-row-label {
+        font-size: 11px;
+        margin-bottom: 16px;
+      }
+    }
+    .form-row-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 22px 0;
+    }
+    @media (min-width: 1024px) {
+      .form-row-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 48px;
+      }
+    }
+    @media (min-width: 1440px) {
+      .form-row-fields {
+        gap: 0 64px;
+      }
+    }
+    .form-row-fields.single {
+      display: block;
+    }
+    .form-field {
+      border: none;
+      background: transparent;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+      width: 100%;
+      padding: 4px 0 10px 0;
+      color: #000;
+      font-size: 23px;
+      font-weight: 400;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      outline: none;
+      transition: border-color 0.25s ease;
+      border-radius: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      line-height: 1.25;
+    }
+    @media (min-width: 640px) {
+      .form-field {
+        font-size: 24px;
+        padding: 5px 0 11px 0;
+      }
+    }
+    @media (min-width: 1024px) {
+      .form-field {
+        font-size: 25px;
+        padding: 6px 0 12px 0;
+      }
+    }
+    .form-field:focus {
+      border-color: #000;
+    }
+    .form-field::placeholder {
+      color: #000000;
+      opacity: 1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+    .form-field::-webkit-input-placeholder {
+      color: #000000;
+      opacity: 1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+    .form-field::-moz-placeholder {
+      color: #000000;
+      opacity: 1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+    .form-field:-ms-input-placeholder {
+      color: #000000;
+      opacity: 1;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+    .form-field:-webkit-autofill {
+      -webkit-text-fill-color: #000;
+      -webkit-box-shadow: 0 0 0 1000px transparent inset;
+      transition: background-color 5000s ease-in-out 0s;
+      box-shadow: 0 0 0 1000px transparent inset;
+    }
+    select.form-field {
+      cursor: pointer;
+      color: #000000;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 2px center;
+      background-size: 16px 16px;
+      padding-right: 28px;
+    }
+    select.form-field option {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      background-color: #ffffff;
+      color: #000;
+    }
+    textarea.form-field {
+      border: 1px solid rgba(0, 0, 0, 0.7);
+      padding: 16px;
+      min-height: 280px;
+      resize: none;
+      font-size: 21px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      line-height: 1.35;
+      border-radius: 0;
+    }
+    @media (min-width: 640px) {
+      textarea.form-field {
+        min-height: 300px;
+        font-size: 22px;
+      }
+    }
+    @media (min-width: 1024px) {
+      textarea.form-field {
+        min-height: 320px;
+        font-size: 23px;
+      }
+    }
+    textarea.form-field:focus {
+      border-color: #000;
+    }
+
+    /* Custom Dropdown Styling */
+    .custom-dropdown {
+      position: relative;
+      width: 100%;
+    }
+    .custom-dropdown-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+      padding: 4px 0 10px 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 23px;
+      color: #000;
+      transition: border-color 0.25s ease;
+    }
+    @media (min-width: 640px) {
+      .custom-dropdown-trigger {
+        font-size: 24px;
+        padding: 5px 0 11px 0;
+      }
+    }
+    @media (min-width: 1024px) {
+      .custom-dropdown-trigger {
+        font-size: 25px;
+        padding: 6px 0 12px 0;
+      }
+    }
+    .custom-dropdown-trigger i {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+      opacity: 0.7;
+    }
+    .custom-dropdown.active .custom-dropdown-trigger i {
+      transform: rotate(180deg);
+    }
+    .custom-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid #000000;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: -1px;
+    }
+    .custom-dropdown-menu.show {
+      display: block;
+    }
+    .custom-dropdown-option {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      color: #000;
+      transition: background 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+    .custom-dropdown-option:hover {
+      background: #F4F0EB;
+    }
+    .custom-dropdown-option.selected {
+      background: #EAE5DD;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-arris-cream text-black antialiased">
+
+  <!-- ========================================================================= -->
+  <!-- 1. NAVIGATION BAR                                                         -->
+  <!-- ========================================================================= -->
+  <header id="navbar" class="relative z-30 w-full bg-arris-cream">
+    <nav
+      class="relative flex items-center justify-between px-6 sm:px-12 xl:px-[97px] py-6 sm:py-8 max-w-[1920px] mx-auto hero-nav-animate"
+    >
+      <!-- Logo: ARRIS ARCHITECTS in pure black -->
+      <a href="index.html" class="inline-block">
+        <img
+          src="images/image 7.png"
+          alt="Arris Architects Logo"
+          class="h-9 sm:h-10 lg:h-12 w-auto brightness-0"
+        />
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <ul
+        class="hidden lg:flex items-center gap-8 md:gap-10 lg:gap-[130px] text-black t-nav font-[300] tracking-[0.11em] uppercase"
+      >
+        <li>
+            <a href="projects.html" class="hover:text-black/60 transition-colors py-2 block">PROJECTS</a>
+            
+          </li>
+          
+        <li class="nav-dropdown-expertise">
+          <a href="interior.html" class="hover:text-black/60 transition-colors py-2 block">EXPERTISE</a>
+          <!-- Mega Dropdown Panel with Image Shuffle -->
+          <div class="expertise-dropdown-menu">
+            <div class="flex items-center justify-between gap-6 lg:gap-10 xl:gap-14 w-full">
+              <!-- Left: Category List -->
+              <div class="w-[44%] flex flex-col justify-center">
+                  <ul class="flex flex-col space-y-2 xl:space-y-2.5">
+                    <li>
+                      <a href="architecture.html" class="expertise-nav-item active" data-img="images/Hazaribaug Bungalow/Scene 13_1.jpg" data-peek="images/interior/Rectangle 66.png">
+                        Architecture
+                      </a>
+                    </li>
+                    <li>
+                      <a href="interior.html" class="expertise-nav-item" data-img="images/Aldona Villa/BED-1-2_3.jpg" data-peek="images/Aldona Villa/17_4.jpg">
+                        Interiors
+                      </a>
+                    </li>
+                    <li>
+                      <a href="schools.html" class="expertise-nav-item" data-img="images/homepage/project 2.jpg.jpeg" data-peek="images/Rajhans Precia/KZP00451.jpg">
+                        Schools
+                      </a>
+                    </li>
+                    <li>
+                      <a href="cinemas.html" class="expertise-nav-item" data-img="images/Devgn Cinex Bellona/4.jpeg" data-peek="images/homepage/project 1.2.jpg.jpeg">
+                        Cinemas
+                      </a>
+                    </li>
+                    <li>
+                      <a href="commercial.html" class="expertise-nav-item" data-img="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg" data-peek="images/Rajhans Precia/KZP00285.jpg">
+                        Commercial
+                      </a>
+                    </li>
+                    <li>
+                      <a href="residential.html" class="expertise-nav-item" data-img="images/Aldona Villa/17_4.jpg" data-peek="images/Rajhans Precia/DJI_20250120213924_0431_D.jpg">
+                        Residential
+                      </a>
+                    </li>
+                    <li>
+                      <a href="entertainment-leisure.html" class="expertise-nav-item" data-img="images/Rajhans Precia/KZP00285.jpg" data-peek="images/Hazaribaug Bungalow/Scene 13_1.jpg">
+                        Entertainment &amp; Leisure
+                      </a>
+                    </li>
+                    <li>
+                      <a href="auditoriums.html" class="expertise-nav-item" data-img="images/homepage/project 1.2.jpg.jpeg" data-peek="images/Rajhans Precia/KZP00451.jpg">
+                        Auditoriums
+                      </a>
+                    </li>
+                    <li>
+                      <a href="hospitality.html" class="expertise-nav-item" data-img="images/interior/Rectangle 66.png" data-peek="images/Aldona Villa/17_4.jpg">
+                        Hospitality
+                      </a>
+                    </li>
+                  </ul>
+              </div>
+
+              <!-- Right: Image Card Stack with Shuffle Animation -->
+              <div class="w-[56%] flex justify-end">
+                <div class="expertise-card-stack relative overflow-hidden">
+                  <!-- Peek Card (Bottom stacked layer) -->
+                  <div id="expertise-card-peek" class="expertise-card-peek absolute inset-0 translate-y-6 scale-[0.98] overflow-hidden shadow-xl pointer-events-none transition-transform duration-300">
+                    <img
+                      id="expertise-img-peek"
+                      src="images/interior/Rectangle 66.png"
+                      alt="Preview Stack"
+                      class="expertise-img-peek w-full h-full object-cover block"
+                    />
+                  </div>
+
+                  <!-- Main Card (Top layer) -->
+                  <div id="expertise-card-main" class="expertise-card-main absolute inset-0 z-10 overflow-hidden shadow-2xl">
+                    <img
+                      id="expertise-img-main"
+                      src="images/Hazaribaug Bungalow/Scene 13_1.jpg"
+                      alt="Architecture"
+                      class="expertise-img-main absolute inset-0 w-full h-full object-cover block will-change-transform"
+                    />
+                    <img
+                      id="expertise-img-fade"
+                      src=""
+                      alt="Crossfade Layer"
+                      class="expertise-img-fade absolute inset-0 w-full h-full object-cover block opacity-0 pointer-events-none will-change-transform"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-dropdown-practice">
+          <a href="about-arris.html" class="hover:text-black/60 transition-colors py-2 block">PRACTICE</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="practice-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="about-arris.html" class="practice-nav-item">
+                      About Arris
+                    </a>
+                  </li>
+                  <li>
+                    <a href="about-arris.html#design-philosophy" class="practice-nav-item">
+                      Design Philosophy
+                    </a>
+                  </li>
+                  <li>
+                    <a href="publications.html" class="practice-nav-item">
+                      Publications
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+                  <li class="nav-dropdown-studio">
+            <a href="meet-the-team.html" class="hover:text-white/70 transition-colors py-2 block">STUDIO</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="studio-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="meet-the-team.html" class="studio-nav-item">
+                      Meet the team
+                    </a>
+                  </li>
+                  <li>
+                    <a href="insights-journal.html" class="studio-nav-item">
+                      Insights / Journal
+                    </a>
+                  </li>
+                  <li>
+                    <a href="events.html" class="studio-nav-item">
+                      Events
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nav-dropdown-contact">
+            <a href="contact.html" class="hover:text-white/70 transition-colors py-2 block">CONTACT</a>
+            <!-- Mega Dropdown Panel (Text Only) -->
+            <div class="contact-dropdown-menu">
+              <div class="w-full flex flex-col justify-center">
+                <ul class="flex flex-col space-y-4 xl:space-y-5">
+                  <li>
+                    <a href="project-inquiries.html" class="contact-nav-item">
+                      Project Enquiries
+                    </a>
+                  </li>
+                  <li>
+                    <a href="profiles.html" class="contact-nav-item">
+                      Profiles
+                    </a>
+                  </li>
+                  <li>
+                    <a href="careers.html" class="contact-nav-item">
+                      Careers
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+      </ul>
+
+      <!-- Mobile Menu Trigger matching Figma staggered bars -->
+      <button
+        id="mobile-menu-btn"
+        class="lg:hidden text-black p-2 focus:outline-none flex flex-col justify-center items-end space-y-1.5 w-11 h-10"
+        aria-label="Toggle Navigation"
+      >
+        <span class="w-7 h-[2px] bg-black rounded-full transition-transform"></span>
+        <span class="w-7 h-[2px] bg-black rounded-full mr-1 transition-transform"></span>
+        <span class="w-7 h-[2px] bg-black rounded-full mr-2 transition-transform"></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Drawer Overlay -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-[#0c0c0c] z-[99999] flex flex-col justify-between px-6 py-6 sm:px-12 sm:py-8 transition-all duration-300 opacity-0 pointer-events-none translate-x-full"
+    >
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="inline-block">
+          <img
+            src="images/image 7.png"
+            alt="Arris Architects Logo"
+            class="h-8 w-auto brightness-100"
+          />
+        </a>
+        <button
+          id="mobile-menu-close"
+          class="text-white p-2 focus:outline-none"
+          aria-label="Close Menu"
+        >
+          <i data-lucide="x" class="w-7 h-7"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Navigation Items Container -->
+      <div
+        class="my-auto py-4 overflow-y-auto max-h-[calc(100dvh-160px)] no-scrollbar"
+      >
+        <ul
+          class="flex flex-col space-y-4 text-white t-subheading font-[300] tracking-wide"
+        >
+          <!-- 1. Projects -->
+          <li>
+            <a
+              href="projects.html"
+              class="mobile-nav-link hover:text-white/70 transition-colors block py-1.5"
+              >Projects</a
+            >
+          </li>
+
+          <!-- 2. Expertise Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Expertise</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="architecture.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Architecture</a
+              >
+              <a
+                href="interior.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Interiors</a
+              >
+              <a
+                href="schools.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Schools</a
+              >
+              <a
+                href="cinemas.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Cinemas</a
+              >
+              <a
+                href="commercial.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Commercial</a
+              >
+              <a
+                href="residential.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Residential</a
+              >
+              <a
+                href="entertainment-leisure.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Entertainment &amp; Leisure</a
+              >
+              <a
+                href="auditoriums.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Auditoriums</a
+              >
+              <a
+                href="hospitality.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Hospitality</a
+              >
+            </div>
+          </li>
+
+          <!-- 3. Practice Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Practice</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="about-arris.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >About Arris</a
+              >
+              <a
+                href="about-arris.html#design-philosophy"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Design Philosophy</a
+              >
+              <a
+                href="testimonials.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Testimonials</a
+              >
+              <a
+                href="publications.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Publications</a
+              >
+            </div>
+          </li>
+
+          <!-- 4. Studio Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Studio</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="meet-the-team.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Meet the team</a
+              >
+              <a
+                href="insights-journal.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Insights / Journal</a
+              >
+              <a
+                href="events.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Events</a
+              >
+            </div>
+          </li>
+
+          <!-- 5. Contact Accordion -->
+          <li class="mobile-accordion-item">
+            <button
+              type="button"
+              class="mobile-accordion-btn flex items-center justify-between w-full py-1.5 text-left hover:text-white/70 transition-colors focus:outline-none"
+            >
+              <span>Contact</span>
+              <i
+                data-lucide="chevron-down"
+                class="accordion-icon w-5 h-5 transition-transform duration-300 text-white/80"
+              ></i>
+            </button>
+            <div
+              class="mobile-submenu max-h-0 overflow-hidden transition-all duration-300 ease-out pl-3 border-l border-neutral-800 ml-1 mt-1 space-y-2"
+            >
+              <a
+                href="contact.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Contact Us</a
+              >
+              <a
+                href="project-inquiries.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Project Enquiries</a
+              >
+              <a
+                href="profiles.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Profiles</a
+              >
+              <a
+                href="careers.html"
+                class="mobile-nav-link block py-1 t-body text-neutral-400 hover:text-white transition-colors"
+                >Careers</a
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        class="pt-6 border-t border-neutral-800 flex justify-between items-center t-body text-neutral-400"
+      >
+        <span>&copy; 2026 Arris Architects</span>
+        <div class="flex space-x-4 text-white">
+          <a href="#" aria-label="Instagram"
+            ><i data-lucide="instagram" class="w-4 h-4"></i
+          ></a>
+          <a href="https://in.linkedin.com/company/arris-architects-pvt-ltd" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+            ><i data-lucide="linkedin" class="w-4 h-4"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. Project Inquiries & CONTACT FORM SECTION (Cream BG)                          -->
+  <!-- ========================================================================= -->
+  <section class="relative bg-arris-cream pt-4 sm:pt-8 lg:pt-12 pb-16 sm:pb-20 lg:pb-28 px-6 sm:px-12 xl:px-[97px]">
+    <div class="max-w-[1920px] mx-auto">
+
+      <!-- Responsive Grid: Mobile stacks Heading -> Form -> Living Room Image; Desktop places Image under Heading -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-0 lg:gap-x-16 xl:gap-x-24 items-stretch">
+
+        <!-- 1. Heading: Mobile Order 1, Desktop Col 1 Row 1 -->
+        <div class="order-1 lg:col-start-1 lg:row-start-1 lg:mb-8" data-reveal-text>
+          <h1 class="text-black t-display font-[300] leading-tight tracking-normal mb-8 sm:mb-10 lg:mb-0">
+            Project Inquiries
+          </h1>
+        </div>
+
+        <!-- 2. Form Intro (CONTACT + Subtitle): Mobile Order 2, Desktop Col 2 Row 1 -->
+        <div class="order-2 lg:col-start-2 lg:row-start-1 pt-0 lg:pt-1 mb-8 sm:mb-10 lg:mb-8">
+          <span
+            class="block text-black/70 t-body font-sans font-normal tracking-[0.2em] uppercase mb-2"
+            data-reveal-text
+          >
+            CONTACT
+          </span>
+          <p
+            class="font-cormorant text-black t-subheading font-normal leading-[1.25] max-w-[680px]"
+            data-reveal-text
+            data-delay="1"
+          >
+            Fill out the contact form and share the details of your project with us
+          </p>
+        </div>
+
+        <!-- 3. Form: Mobile Order 3, Desktop Col 2 Row 2 -->
+        <div class="order-3 lg:col-start-2 lg:row-start-2 w-full mb-12 sm:mb-16 lg:mb-0 h-full">
+          <div class="max-w-[640px] xl:max-w-[850px] w-full mx-auto lg:mx-0 h-full">
+            <form
+              id="contact-form"
+              class="h-full flex flex-col"
+              onsubmit="event.preventDefault(); submitContactForm();"
+              data-reveal-text
+              data-delay="2"
+            >
+              <!-- YOUR DETAILS -->
+              <div class="form-row">
+                <label class="form-row-label">YOUR DETAILS</label>
+                <div class="form-row-fields">
+                  <div>
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                      class="form-field"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                      class="form-field"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- TYPE -->
+              <div class="form-row">
+                <label class="form-row-label">TYPE</label>
+                <div class="form-row-fields">
+                  <div class="custom-dropdown" id="dropdown-enquiry">
+                    <div class="custom-dropdown-trigger">
+                      <span class="selected-text">Project Enquiry</span>
+                      <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="custom-dropdown-menu">
+                      <div class="custom-dropdown-option" data-value="project-enquiry">Project Enquiry</div>
+                      <div class="custom-dropdown-option" data-value="collaboration">Collaboration</div>
+                      <div class="custom-dropdown-option" data-value="internship">Internship / Careers</div>
+                      <div class="custom-dropdown-option" data-value="press-media">Press &amp; Media</div>
+                      <div class="custom-dropdown-option" data-value="other">Other</div>
+                    </div>
+                    <input type="hidden" name="enquiryType" value="project-enquiry" required>
+                  </div>
+                  <div class="custom-dropdown" id="dropdown-studio">
+                    <div class="custom-dropdown-trigger">
+                      <span class="selected-text">Select Studio</span>
+                      <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="custom-dropdown-menu">
+                      <div class="custom-dropdown-option" data-value="mumbai-studio">Mumbai Studio</div>
+                      <div class="custom-dropdown-option" data-value="thane-studio">Thane Studio</div>
+                      <div class="custom-dropdown-option" data-value="international">International Office</div>
+                    </div>
+                    <input type="hidden" name="studio" value="">
+                  </div>
+                </div>
+              </div>
+
+              <!-- COMPANY -->
+              <div class="form-row">
+                <label class="form-row-label">COMPANY</label>
+                <div class="form-row-fields">
+                  <div>
+                    <input
+                      type="text"
+                      name="companyName"
+                      placeholder="Company Name"
+                      class="form-field"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      name="companyEmail"
+                      placeholder="Company Email"
+                      class="form-field"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- DETAILS TEXTAREA -->
+              <div class="form-row">
+                <label class="form-row-label">DETAILS</label>
+                <div class="form-row-fields single">
+                  <textarea
+                    name="message"
+                    placeholder=""
+                    class="form-field"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="mt-auto pt-8 sm:pt-10">
+                <button
+                  type="submit"
+                  id="submit-btn"
+                  class="bg-[#1c1c1c] hover:bg-neutral-800 text-white px-9 sm:px-11 py-3.5 sm:py-4 t-body font-[400] font-sans tracking-normal transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-arris-cream"
+                >
+                  Send Enquiry
+                </button>
+              </div>
+
+              <!-- Success Message (hidden by default) -->
+              <div
+                id="form-success"
+                class="hidden pt-6 t-body text-green-800 font-[300] leading-[27px] max-w-[540px]"
+              >
+                Thank you for your enquiry. We have received your message and our team will get back to you shortly.
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- 4. Living Room Image: Mobile Order 4, Desktop Col 1 Row 2 -->
+        <div class="order-4 lg:col-start-1 lg:row-start-2 w-full h-full" data-reveal-animation>
+          <div class="w-full h-full overflow-hidden rounded-[8px] sm:rounded-[10px] max-w-[640px] xl:max-w-[760px] mx-auto lg:mx-0 shadow-sm">
+            <img
+              src="images/contact/Rectangle 76.png"
+              alt="Modern Living Room with Exposed Ceiling Beams and Chandelier"
+              class="w-full h-full object-cover block rounded-[8px] sm:rounded-[10px]"
+            />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. GLOBAL WORKS SECTION (Deep Dark BG + Polygon World Map)                 -->
+  <!-- ========================================================================= -->
+  <section class="bg-[#121212] text-white py-16 sm:py-20 lg:py-28 px-6 sm:px-12 xl:px-[97px]">
+    <div class="max-w-[1920px] mx-auto flex items-center justify-center">
+      <!-- Polygon World Map matching Figma -->
+      <div
+        class="w-full max-w-[400px] sm:max-w-[720px] lg:max-w-[1200px] xl:max-w-[1300px] flex items-center justify-center"
+        data-reveal-animation
+      >
+        <img
+          src="images/contact/image 12.png"
+          alt="Global Project Locations - World Map with Yellow Highlighted Regions"
+          class="w-full h-auto object-contain block"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. CONTACT US - 3 INFO ITEMS (Cream BG)                                   -->
+  <!-- ========================================================================= -->
+  <section
+    id="contact-info"
+    class="bg-arris-cream pt-14 sm:pt-20 lg:pt-28 pb-16 sm:pb-20 lg:pb-24 px-6 sm:px-12 xl:px-[97px]"
+  >
+      <div class="max-w-[1920px] mx-auto">
+        <h2
+          class="text-black t-heading font-[300] leading-snug tracking-tight mb-2 sm:mb-3"
+          data-reveal-text
+        >
+          Contact us
+        </h2>
+        <p
+          class="text-black t-body font-[300] leading-[27px] max-w-[646px] mb-8 sm:mb-12 lg:mb-16"
+          data-reveal-text
+          data-delay="1"
+        >
+          Have any questions? Feel free to contact us for more information.
+        </p>
+
+        <!-- 3 Contact Columns (Stacked on mobile, 3-col on desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 lg:gap-16">
+          <!-- Column 1: Email -->
+          <div data-reveal-text>
+            <i
+              data-lucide="mail"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">Email</h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question or idea? Drop us an email we'd love to hear from
+              you.
+            </p>
+            <a
+              href="mailto:arrisarch@gmail.com"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              arrisarch@gmail.com
+            </a>
+          </div>
+
+          <!-- Column 2: Phone -->
+          <div data-reveal-text data-delay="1">
+            <i
+              data-lucide="phone"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">Phone</h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Have a question? Give us a call &mdash; we're happy to help.
+            </p>
+            <a
+              href="tel:+912225829387"
+              class="t-body font-[300] text-neutral-900 underline hover:text-neutral-600 transition-colors"
+            >
+              +912225829387, +912225828996
+            </a>
+          </div>
+
+          <!-- Column 3: Office -->
+          <div data-reveal-text data-delay="2">
+            <i
+              data-lucide="map-pin"
+              class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[1.5] text-neutral-800 mb-1.5 sm:mb-2"
+            ></i>
+            <h4 class="t-subheading font-[300] text-neutral-900 mb-1 sm:mb-2">
+              Office
+            </h4>
+            <p
+              class="text-black t-body font-[300] leading-[27px] max-w-[379px] mb-2 sm:mb-3"
+            >
+              Find us at our office.
+            </p>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="t-body font-[300] text-neutral-900 underline leading-[27px] hover:text-neutral-600 transition-colors block"
+            >
+              711-713 Opal Square, SG Barve Rd, opp. Railadevi TMC Office, Wagle
+              Industrial Estate, Thane West, Thane, Maharashtra 400604
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. FOOTER (Matching Figma Mobile Centered Layout & Desktop Responsive)    -->
+  <!-- ========================================================================= -->
+<div id="footer-placeholder"></div>
+
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+
+    // Custom Dropdown Logic
+    function initCustomDropdowns() {
+      const dropdowns = document.querySelectorAll('.custom-dropdown');
+      
+      dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.custom-dropdown-trigger');
+        const menu = dropdown.querySelector('.custom-dropdown-menu');
+        const options = dropdown.querySelectorAll('.custom-dropdown-option');
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        const selectedText = dropdown.querySelector('.selected-text');
+        
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Close other dropdowns
+          dropdowns.forEach(d => {
+            if (d !== dropdown) {
+              d.querySelector('.custom-dropdown-menu').classList.remove('show');
+              d.classList.remove('active');
+            }
+          });
+          menu.classList.toggle('show');
+          dropdown.classList.toggle('active');
+        });
+        
+        options.forEach(option => {
+          option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+            
+            selectedText.textContent = text;
+            hiddenInput.value = value;
+            
+            options.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            
+            menu.classList.remove('show');
+            dropdown.classList.remove('active');
+          });
+        });
+      });
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', () => {
+        dropdowns.forEach(d => {
+          d.querySelector('.custom-dropdown-menu').classList.remove('show');
+          d.classList.remove('active');
+        });
+      });
+    }
+
+    initCustomDropdowns();
+
+    // Submit handler
+    function submitContactForm() {
+      const form = document.getElementById("contact-form");
+      const btn = document.getElementById("submit-btn");
+      const msg = document.getElementById("form-success");
+      if (!form || !btn || !msg) return;
+
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      btn.style.opacity = "0.7";
+
+      setTimeout(function () {
+        form.reset();
+        btn.disabled = false;
+        btn.textContent = originalText;
+        btn.style.opacity = "1";
+        msg.classList.remove("hidden");
+        setTimeout(function () {
+          msg.classList.add("hidden");
+        }, 6000);
+      }, 1000);
+    }
+
+    // Mobile Drawer Toggle
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const closeBtn = document.getElementById("mobile-menu-close");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navLinks = document.querySelectorAll(".mobile-nav-link");
+
+    function openMenu() {
+      mobileMenu.classList.remove("opacity-0", "pointer-events-none", "translate-x-full");
+      mobileMenu.classList.add("opacity-100", "pointer-events-auto", "translate-x-0");
+      document.body.classList.add("overflow-hidden");
+    }
+    function closeMenu() {
+      mobileMenu.classList.remove("opacity-100", "pointer-events-auto", "translate-x-0");
+      mobileMenu.classList.add("opacity-0", "pointer-events-none", "translate-x-full");
+      document.body.classList.remove("overflow-hidden");
+    }
+    if (menuBtn) menuBtn.addEventListener("click", openMenu);
+    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+    navLinks.forEach(function (l) { l.addEventListener("click", closeMenu); });
+  </script>
+
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <!-- GSAP & Animations Runtime -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="animations.js"></script>
+<script src="component.js"></script>
+</body>
+</html>
+
